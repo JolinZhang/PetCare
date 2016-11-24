@@ -27,7 +27,7 @@ public class BaseActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-        if (Configuration.getInstance().getNightMode(this)) {
+        if (Configuration.getInstance().getNightMode()) {
             this.setTheme(R.style.AppThemeNight);
         } else {
             this.setTheme(R.style.AppTheme);
@@ -38,12 +38,12 @@ public class BaseActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float newLight = sensorEvent.values[0];
-        Boolean nightMode = Configuration.getInstance().getNightMode(this);
+        Boolean nightMode = Configuration.getInstance().getNightMode();
         if (newLight > NIGHT_MODE_THRESHHOLD && nightMode) {
-            Configuration.getInstance().setNightMode(false, this);
+            Configuration.getInstance().setNightMode(false);
             recreate();
         } else if (newLight < NIGHT_MODE_THRESHHOLD && !nightMode) {
-            Configuration.getInstance().setNightMode(true, this);
+            Configuration.getInstance().setNightMode(true);
             recreate();
         }
     }

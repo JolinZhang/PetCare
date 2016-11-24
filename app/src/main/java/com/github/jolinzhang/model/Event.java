@@ -15,16 +15,11 @@ public class Event extends RealmObject {
 
     private String title;
     private String description;
-    private byte[] picture;
     private double longitude;
     private double latitude;
     private Date datetime;
     private boolean isCompleted;
     private Pet owner;
-
-    public byte[] getPicture() {
-        return picture;
-    }
 
     public Date getDatetime() {
         return datetime;
@@ -70,10 +65,6 @@ public class Event extends RealmObject {
         isCompleted = completed;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
@@ -90,7 +81,4 @@ public class Event extends RealmObject {
         this.title = title;
     }
 
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
 }

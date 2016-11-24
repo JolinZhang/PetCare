@@ -24,7 +24,6 @@ public class Pet extends RealmObject {
     private String chipId;
     private String chipCompany;
     private String medications;
-    private byte[] avatar;
 
     public String getId() {
         return id;
@@ -66,14 +65,6 @@ public class Pet extends RealmObject {
         return medications;
     }
 
-    public byte[] getAvatar() {
-        return avatar;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -109,10 +100,5 @@ public class Pet extends RealmObject {
     public void setMedications(String medications) {
         this.medications = medications;
     }
-
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
-
 
 }
