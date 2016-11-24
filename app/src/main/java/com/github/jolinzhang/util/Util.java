@@ -7,16 +7,13 @@ import android.provider.MediaStore;
 import com.github.jolinzhang.petcare.ThisApplication;
 
 import java.io.File;
-import java.io.IOException;
 
-import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 
 /**
@@ -30,7 +27,7 @@ public class Util {
 
     public static Util getInstance() { return instance; }
 
-    public void uploadPicture(Uri URI, String id) {
+    public void uploadPicture(Uri URI, String id, Callback callback) {
 
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = ThisApplication.instance.getContentResolver().query(URI, projection, null, null, null);
@@ -55,14 +52,6 @@ public class Util {
                 .post(requestBody)
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-            }
-        });
+        client.newCall(request).enqueue(callback);
     }
 }
