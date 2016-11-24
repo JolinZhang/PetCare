@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_setting_account"
+        android:drawablePadding="5dp"
+        android:id="@+id/myAccount"
+        android:text="My Account"
+        android:textSize="16sp"
+        android:gravity="center_vertical">
+    </TextView>
+
+    <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_setting_notification"
+        android:drawablePadding="5dp"
+        android:id="@+id/notification"
+        android:text="Notification"
+        android:textSize="16sp"
+        android:gravity="center_vertical">
+    </TextView>
+
+    <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_setting_general"
+        android:drawablePadding="5dp"
+        android:id="@+id/general"
+        android:text="General"
+        android:textSize="16sp"
+        android:gravity="center_vertical">
+    </TextView>
+    <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_setting_facebook"
+        android:drawablePadding="5dp"
+        android:id="@+id/shareUsOnFacebook"
+        android:text="Share Us on Facebook"
+        android:textSize="16sp"
+        android:gravity="center_vertical">
+    </TextView>
+
+    <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_setting_twitter"
+        android:drawablePadding="5dp"
+        android:id="@+id/followUsOnTwitter"
+        android:text="Follow Us on Twitter"
+        android:textSize="16sp"
+        android:gravity="center_vertical">
+    </TextView>
+
+    <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_setting_help"
+        android:drawablePadding="5dp"
+        android:id="@+id/helpAndFeedback"
+        android:text="Help and Feedback"
+        android:textSize="16sp"
+        android:gravity="center_vertical">
+    </TextView>
+</LinearLayout>

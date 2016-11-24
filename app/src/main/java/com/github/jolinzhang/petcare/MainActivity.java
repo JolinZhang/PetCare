@@ -1,5 +1,7 @@
 package com.github.jolinzhang.petcare;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +15,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.jolinzhang.petcare.Fragment.FutureEventFragment;
+import com.github.jolinzhang.petcare.Fragment.GalleryFragment;
+import com.github.jolinzhang.petcare.Fragment.SettingFragment;
+import com.github.jolinzhang.petcare.Fragment.TimeLineFragment;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private TimeLineFragment timeLineFragment;
+    private FutureEventFragment futureEventFragment;
+    private GalleryFragment galleryFragment;
+    private SettingFragment settingFragment;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +35,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fragmentManager = getFragmentManager();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,18 +95,40 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.timeLine) {
+            //connect to timeLine Fragment
+            timeLineFragment = (TimeLineFragment) fragmentManager.findFragmentByTag("TimeLineFragment");
+            if(timeLineFragment == null){
+                timeLineFragment = new TimeLineFragment();
+            }
+            transaction.replace(R.id.content_scrolling, timeLineFragment,"TimeLineFragment")
+            .commit();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.featureEvent) {
+            futureEventFragment = (FutureEventFragment) fragmentManager.findFragmentByTag("FutureEventFragment");
+            if(futureEventFragment == null){
+                futureEventFragment = new FutureEventFragment();
+            }
+            transaction.replace(R.id.content_scrolling, futureEventFragment, "FutureEventFragment")
+                    .commit();
+        } else if (id == R.id.gallery) {
+            galleryFragment = (GalleryFragment) fragmentManager.findFragmentByTag("GalleryFragment");
+            if(galleryFragment == null){
+                galleryFragment = new GalleryFragment();
+            }
+            transaction.replace(R.id.content_scrolling, galleryFragment, "GalleryFragment")
+                    .commit();
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.setting) {
+            settingFragment = (SettingFragment) fragmentManager.findFragmentByTag("SettingFragment");
+            if(settingFragment == null){
+                settingFragment = new SettingFragment();
+            }
+            transaction.replace(R.id.content_scrolling,settingFragment,"SettingFragment")
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
