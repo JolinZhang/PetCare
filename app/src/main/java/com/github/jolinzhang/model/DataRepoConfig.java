@@ -17,7 +17,7 @@ public class DataRepoConfig implements IDataRepoConfig {
 
     private static DataRepoConfig instance = new DataRepoConfig();
 
-    public static IDataRepoConfig getInstance() {
+    public static DataRepoConfig getInstance() {
         return instance;
     }
 

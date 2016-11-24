@@ -3,8 +3,6 @@ package com.github.jolinzhang.model;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.github.jolinzhang.util.Configuration;
-
 import io.realm.ObjectServerError;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -55,7 +53,7 @@ public class DataRepository implements IDataRepository {
 
     @Override
     public Pet getPet() {
-        return realm.where(Pet.class).equalTo("id", Configuration.getInstance().getCurrentPetId())
+        return realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId())
                 .findFirstAsync();
     }
 
@@ -63,7 +61,7 @@ public class DataRepository implements IDataRepository {
     public RealmResults<Pet> getPets() {
         if (pets != null) { return pets; }
         return realm.where(Pet.class)
-                .in("id", (String[]) Configuration.getInstance().getPetIds().toArray())
+                .in("id", (String[]) DataRepoConfig.getInstance().getPetIds().toArray())
                 .findAllSortedAsync("id");
     }
 
@@ -71,7 +69,7 @@ public class DataRepository implements IDataRepository {
     public RealmResults<Event> getPastEvents() {
         if (pastEvents != null) { return pastEvents; }
         return realm.where(Event.class)
-                .equalTo("owner.id", Configuration.getInstance().getCurrentPetId())
+                .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", true)
                 .findAllSortedAsync("datetime");
     }
@@ -80,7 +78,7 @@ public class DataRepository implements IDataRepository {
     public RealmResults<Event> getPastEventsWithPicture() {
         if (pastEventsWithPicture != null) { return pastEventsWithPicture; }
         return realm.where(Event.class)
-                .equalTo("owner.id", Configuration.getInstance().getCurrentPetId())
+                .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", true)
                 .equalTo("hasPicture", true)
                 .findAllSortedAsync("datetime");
@@ -90,7 +88,7 @@ public class DataRepository implements IDataRepository {
     public RealmResults<Event> getFutureEvents() {
         if (futureEvents != null) { return futureEvents; }
         return realm.where(Event.class)
-                .equalTo("owner.id", Configuration.getInstance().getCurrentPetId())
+                .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", false)
                 .findAllSortedAsync("datetime");
     }
