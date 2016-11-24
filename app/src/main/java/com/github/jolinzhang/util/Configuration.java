@@ -3,10 +3,6 @@ package com.github.jolinzhang.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.github.jolinzhang.petcare.ThisApplication;
-
-import java.util.Set;
-
 /**
  * Created by Shadow on 11/20/16.
  */
@@ -37,7 +33,7 @@ public class Configuration {
     }
 
     public boolean getNightMode() {
-        return getSharePreferences().getBoolean(NIGHT_MODE, false);
+        return sharedPreferences.getBoolean(NIGHT_MODE, false);
     }
 
     public void setNightModeAuto(Boolean value) {
@@ -47,38 +43,7 @@ public class Configuration {
     }
 
     public Boolean getNightModeAuto() {
-        return getSharePreferences().getBoolean(NIGHT_MODE_AUTO, false);
-    }
-
-    public void addPet(String petId) {
-        SharedPreferences.Editor editor = getEditor();
-        Set<String> ids = getPetIds();
-        ids.add(petId);
-        editor.putStringSet(PET_IDS, ids);
-    }
-
-    public void removePet(String petId) {
-        SharedPreferences.Editor editor = getEditor();
-        Set<String> ids = getPetIds();
-        ids.remove(petId);
-        editor.putStringSet(PET_IDS, ids);
-    }
-
-    public Set<String> getPetIds() {
-        return getSharePreferences().getStringSet(PET_IDS, null);
-    }
-
-    public String getCurrentPetId() {
-        return getSharePreferences().getString(CURRENT_PET_ID, null);
-    }
-
-    public void setCurrentPetId(String id) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putString(CURRENT_PET_ID, id);
-    }
-
-    private SharedPreferences getSharePreferences() {
-        return sharedPreferences;
+        return sharedPreferences.getBoolean(NIGHT_MODE_AUTO, false);
     }
 
     private SharedPreferences.Editor getEditor() {

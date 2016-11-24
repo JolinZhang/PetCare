@@ -8,6 +8,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.jolinzhang.util.Configuration;
+
 /**
  * Created by Shadow on 11/20/16.
  */

@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import com.github.jolinzhang.petcare.R;
-import com.github.jolinzhang.petcare.ThisApplication;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
