@@ -5,10 +5,8 @@ package com.github.jolinzhang.petcare;
  */
 
 import android.app.Application;
+import android.content.Context;
 import android.widget.Toast;
-
-//import com.github.jolinzhang.model.Event;
-//import com.github.jolinzhang.model.Pet;
 
 import io.realm.ObjectServerError;
 import io.realm.Realm;
@@ -18,6 +16,8 @@ import io.realm.SyncUser;
 
 public class ThisApplication extends Application implements SyncUser.Callback {
 
+    public static ThisApplication instance;
+
     public static final String AUTH_URL = "http://" + "138.68.55.252" + ":9080/auth";
     public static final String REALM_URL = "realm://" + "138.68.55.252" + ":9080/~/petcare";
 
@@ -26,6 +26,7 @@ public class ThisApplication extends Application implements SyncUser.Callback {
         super.onCreate();
         Realm.init(this);
         SyncUser.loginAsync(SyncCredentials.usernamePassword("diva@petcare.com", "can", false), ThisApplication.AUTH_URL, this);
+        instance = this;
     }
 
     @Override
