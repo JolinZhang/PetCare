@@ -3,8 +3,12 @@ package com.github.jolinzhang.util;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.ImageView;
 
+import com.github.jolinzhang.petcare.R;
 import com.github.jolinzhang.petcare.ThisApplication;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
 
@@ -54,4 +58,17 @@ public class Util {
 
         client.newCall(request).enqueue(callback);
     }
+
+    public void loadImage(String id, ImageView imageView, boolean isCircle) {
+        imageView.getWidth();
+        RequestCreator rc = Picasso.with(ThisApplication.instance)
+                .load("http://54.191.156.153/avatar/pt-"+id+".png") // Your image source.
+                .placeholder(R.drawable.ic_menu_gallery);
+        if (isCircle) {
+            int width = imageView.getMeasuredWidth();
+            rc = rc.transform(new RoundedTransformation(width, 0);
+        }
+        rc.fit().centerCrop().into(imageView);
+    }
+
 }
