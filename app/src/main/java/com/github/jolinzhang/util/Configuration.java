@@ -1,7 +1,9 @@
-package com.github.jolinzhang.petcare;
+package com.github.jolinzhang.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.github.jolinzhang.petcare.ThisApplication;
 
 import java.util.Set;
 
@@ -15,11 +17,18 @@ public class Configuration {
     private Configuration() {}
     public static Configuration getInstance() { return instance; }
 
-    private String CONFIGURATION_NAME = "CONFIGURATION_NAME";
+    private SharedPreferences sharedPreferences;
 
-    private String NIGHT_MODE = "NIGHT_MODE";
-    private String NIGHT_MODE_AUTO = "NIGHT_MODE_AUTO";
-    private String PET_IDS = "PET_IDS";
+    public static void init(Context context) {
+        instance.sharedPreferences = context.getSharedPreferences(CONFIGURATION_NAME, Context.MODE_PRIVATE);
+    }
+
+    private static final String CONFIGURATION_NAME = "CONFIGURATION_NAME";
+
+    private static final String NIGHT_MODE = "NIGHT_MODE";
+    private static final String NIGHT_MODE_AUTO = "NIGHT_MODE_AUTO";
+    private static final String PET_IDS = "PET_IDS";
+    private static final String CURRENT_PET_ID = "CURRENT_PET_ID";
 
     public void setNightMode(Boolean value) {
         SharedPreferences.Editor editor = getEditor();
@@ -59,12 +68,21 @@ public class Configuration {
         return getSharePreferences().getStringSet(PET_IDS, null);
     }
 
+    public String getCurrentPetId() {
+        return getSharePreferences().getString(CURRENT_PET_ID, null);
+    }
+
+    public void setCurrentPetId(String id) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putString(CURRENT_PET_ID, id);
+    }
+
     private SharedPreferences getSharePreferences() {
-        return ThisApplication.instance.getSharedPreferences(CONFIGURATION_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences;
     }
 
     private SharedPreferences.Editor getEditor() {
-        return ThisApplication.instance.getSharedPreferences(CONFIGURATION_NAME, Context.MODE_PRIVATE).edit();
+        return sharedPreferences.edit();
     }
 
 }

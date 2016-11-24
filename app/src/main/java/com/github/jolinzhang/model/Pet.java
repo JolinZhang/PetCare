@@ -101,4 +101,7 @@ public class Pet extends RealmObject {
         this.medications = medications;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

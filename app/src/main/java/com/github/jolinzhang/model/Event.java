@@ -20,6 +20,11 @@ public class Event extends RealmObject {
     private Date datetime;
     private boolean isCompleted;
     private Pet owner;
+    private boolean hasPicture;
+
+    public boolean hasPicture() {
+        return hasPicture;
+    }
 
     public Date getDatetime() {
         return datetime;
@@ -53,6 +58,10 @@ public class Event extends RealmObject {
         return isCompleted;
     }
 
+    public void setHasPicture(boolean hasPicture) {
+        this.hasPicture = hasPicture;
+    }
+
     public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
@@ -81,4 +90,7 @@ public class Event extends RealmObject {
         this.title = title;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

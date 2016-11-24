@@ -1,5 +1,6 @@
 package com.github.jolinzhang.util;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -31,10 +32,14 @@ public class Util {
 
     public static Util getInstance() { return instance; }
 
+    public static void init(Context context) { instance.context = context; }
+
+    private Context context;
+
     public void uploadPicture(Uri URI, String id, Callback callback) {
 
         String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = ThisApplication.instance.getContentResolver().query(URI, projection, null, null, null);
+        Cursor cursor = context.getContentResolver().query(URI, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         String s =cursor.getString(column_index);
@@ -60,13 +65,12 @@ public class Util {
     }
 
     public void loadImage(String id, ImageView imageView, boolean isCircle) {
-        imageView.getWidth();
-        RequestCreator rc = Picasso.with(ThisApplication.instance)
+        RequestCreator rc = Picasso.with(context)
                 .load("http://54.191.156.153/avatar/pt-"+id+".png") // Your image source.
                 .placeholder(R.drawable.ic_menu_gallery);
         if (isCircle) {
             int width = imageView.getMeasuredWidth();
-            rc = rc.transform(new RoundedTransformation(width, 0);
+            rc = rc.transform(new RoundedTransformation(width, 0));
         }
         rc.fit().centerCrop().into(imageView);
     }
