@@ -3,6 +3,7 @@ package com.github.jolinzhang.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -48,7 +49,7 @@ public class DataRepoConfig implements IDataRepoConfig {
     private String PET_IDS = "PET_IDS";
 
     Set<String> getPetIds() {
-        return getSharePreferences().getStringSet(PET_IDS, null);
+        return getSharePreferences().getStringSet(PET_IDS, new HashSet<String>());
     }
 
     public void addPetId(String id) {
