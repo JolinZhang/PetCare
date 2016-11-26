@@ -42,9 +42,10 @@ public class DataRepoConfig implements IDataRepoConfig {
         SharedPreferences.Editor editor = getEditor();
         editor.putString(CURRENT_PET_ID, id);
         editor.commit();
+        ((DataRepository) DataRepository.getInstance()).invalid();
     }
 
-    String getCurrentPetId() { return getSharePreferences().getString(CURRENT_PET_ID, null); }
+    String getCurrentPetId() { return getSharePreferences().getString(CURRENT_PET_ID, ""); }
 
     private String PET_IDS = "PET_IDS";
 

@@ -109,4 +109,11 @@ public class DataRepository implements IDataRepository {
         realm.commitTransaction();
     }
 
+    void invalid() {
+        pets = null;
+        pastEvents = null;
+        pastEventsWithPicture = null;
+        futureEvents = null;
+    }
+
 }
