@@ -18,4 +18,6 @@ public interface IDataRepository {
 
     RealmResults<Event> getFutureEvents();
 
+    void createOrUpdatePet(PetForm petForm);
+
 }

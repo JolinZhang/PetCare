@@ -92,4 +92,21 @@ public class DataRepository implements IDataRepository {
                 .equalTo("isCompleted", false)
                 .findAllSortedAsync("datetime");
     }
+
+    @Override
+    public void createOrUpdatePet(PetForm petForm) {
+        realm.beginTransaction();
+        Pet pet = realm.createObject(Pet.class, petForm.getId());
+        pet.setName(petForm.getName());
+        pet.setFemale(petForm.isFemale());
+        pet.setBirthday(petForm.getBirthday());
+        pet.setSpecies(petForm.getSpecies());
+        pet.setMedications(petForm.getMedications());
+        pet.setChipCompany(petForm.getChipCompany());
+        pet.setChipId(petForm.getChipId());
+        pet.setVetName(petForm.getVetName());
+        pet.setVetPhone(petForm.getVetPhone());
+        realm.commitTransaction();
+    }
+
 }
