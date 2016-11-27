@@ -126,7 +126,7 @@ public class NewPetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
+                startActivityForResult(pickPhoto, 1);
             }
         });
 
@@ -206,6 +206,7 @@ public class NewPetActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             avatarUri = data.getData();
+            Util.getInstance().loadImage(avatarUri, avatarImageView);
         }
     }
 

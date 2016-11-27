@@ -77,6 +77,14 @@ public class Util {
         rc.fit().centerCrop().into(imageView);
     }
 
+    public void loadImage(Uri uri, ImageView imageView) {
+        Picasso.with(context)
+                .load(uri)
+                .fit()
+                .centerCrop()
+                .into(imageView);
+    }
+
     public SimpleDateFormat dateFormatter() {
         return new SimpleDateFormat("MMM. dd, yyyy", Locale.US);
     }

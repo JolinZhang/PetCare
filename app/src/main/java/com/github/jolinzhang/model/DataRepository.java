@@ -106,6 +106,15 @@ public class DataRepository implements IDataRepository {
         DataRepoConfig.getInstance().addPetId(pet.getId());
     }
 
+    @Override
+    public void createOrUpdateEvent(Event event) {
+        realm.beginTransaction();
+        event.setOwner(getPet("hellodiva"));
+        realm.copyToRealmOrUpdate(event);
+        realm.commitTransaction();
+    }
+
+
     void invalid() {
         pets = null;
         pastEvents = null;

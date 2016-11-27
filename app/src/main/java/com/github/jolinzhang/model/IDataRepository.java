@@ -22,4 +22,6 @@ public interface IDataRepository {
 
     void createOrUpdatePet(Pet pet);
 
+    void createOrUpdateEvent(Event event);
+
 }
