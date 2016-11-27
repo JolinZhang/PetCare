@@ -60,6 +60,11 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
+    public Pet getPet(String id) {
+        return realm.copyFromRealm(realm.where(Pet.class).equalTo("id", id).findFirst());
+    }
+
+    @Override
     public RealmResults<Pet> getPets() {
         if (pets != null) { return pets; }
         Set<String> sss = DataRepoConfig.getInstance().getPetIds();
@@ -96,4 +101,20 @@ public class DataRepository implements IDataRepository {
                 .equalTo("isCompleted", false)
                 .findAllSortedAsync("datetime");
     }
+
+    @Override
+    public void createOrUpdatePet(Pet pet) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(pet);
+        realm.commitTransaction();
+        DataRepoConfig.getInstance().addPetId(pet.getId());
+    }
+
+    void invalid() {
+        pets = null;
+        pastEvents = null;
+        pastEventsWithPicture = null;
+        futureEvents = null;
+    }
+
 }

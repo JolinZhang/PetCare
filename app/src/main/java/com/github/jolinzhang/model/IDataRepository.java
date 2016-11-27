@@ -10,6 +10,8 @@ public interface IDataRepository {
 
     Pet getPet();
 
+    Pet getPet(String id);
+
     RealmResults<Pet> getPets();
 
     RealmResults<Event> getPastEvents();
@@ -17,5 +19,7 @@ public interface IDataRepository {
     RealmResults<Event> getPastEventsWithPicture();
 
     RealmResults<Event> getFutureEvents();
+
+    void createOrUpdatePet(Pet pet);
 
 }
