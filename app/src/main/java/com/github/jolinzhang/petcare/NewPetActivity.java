@@ -130,6 +130,10 @@ public class NewPetActivity extends AppCompatActivity {
             }
         });
 
+        String petId = getIntent().getStringExtra("pet_id");
+        if (petId != null) {
+            setPet(DataRepository.getInstance().getPet(petId));
+        }
     }
 
     @Override

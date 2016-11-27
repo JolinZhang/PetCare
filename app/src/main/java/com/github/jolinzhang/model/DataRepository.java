@@ -58,6 +58,11 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
+    public Pet getPet(String id) {
+        return realm.copyFromRealm(realm.where(Pet.class).equalTo("id", id).findFirst());
+    }
+
+    @Override
     public RealmResults<Pet> getPets() {
         if (pets != null) { return pets; }
         return realm.where(Pet.class)
