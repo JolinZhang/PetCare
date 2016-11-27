@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import io.realm.ObjectServerError;
 import io.realm.Realm;
@@ -73,8 +74,10 @@ public class DataRepository implements IDataRepository {
 
     private RealmResults<Pet> getPets() {
         if (pets != null) { return pets; }
+        Set<String> idsSet = DataRepoConfig.getInstance().getPetIds();
+        String[] idsArray = idsSet.toArray(new String[idsSet.size()]);
         return realm.where(Pet.class)
-                .in("id", (String[]) DataRepoConfig.getInstance().getPetIds().toArray())
+                .in("id", idsArray)
                 .findAllSortedAsync("id");
     }
 

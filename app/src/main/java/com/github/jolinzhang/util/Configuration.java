@@ -23,8 +23,6 @@ public class Configuration {
 
     private static final String NIGHT_MODE = "NIGHT_MODE";
     private static final String NIGHT_MODE_AUTO = "NIGHT_MODE_AUTO";
-    private static final String PET_IDS = "PET_IDS";
-    private static final String CURRENT_PET_ID = "CURRENT_PET_ID";
 
     public void setNightMode(Boolean value) {
         SharedPreferences.Editor editor = getEditor();

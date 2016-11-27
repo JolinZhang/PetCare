@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.jolinzhang.petcare.Adapter.FeatureAdapter;
 import com.github.jolinzhang.petcare.Adapter.TimeLineAdapter;
 import com.github.jolinzhang.petcare.R;
 
@@ -23,10 +24,14 @@ public class FutureEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.future_event_fragment,container, false);
+        //change fragment title
+        getActivity().setTitle("Future Event");
+
+        //Recycler
         futureEventRecycler = (RecyclerView) view.findViewById(R.id.futureEventRecycler);
         layoutManager = new LinearLayoutManager(getActivity());
         futureEventRecycler.setLayoutManager(layoutManager);
-        adapter = new TimeLineAdapter();
+        adapter = new FeatureAdapter();
         futureEventRecycler.setAdapter(adapter);
         return view;
     }

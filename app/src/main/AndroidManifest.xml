@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:name=".ThisApplication">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,6 +26,12 @@
         </activity>
         <activity android:name=".NewPetActivity"/>
         <activity android:name=".NewEventActivity"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
