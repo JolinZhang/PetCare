@@ -59,7 +59,7 @@ public class Util {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://54.191.156.153/avatar")
+                .url("https://server.shaneqi.com/upload")
                 .post(requestBody)
                 .build();
 
@@ -68,7 +68,7 @@ public class Util {
 
     public void loadImage(String id, ImageView imageView, boolean isCircle) {
         RequestCreator rc = Picasso.with(context)
-                .load("http://54.191.156.153/avatar/pt-"+id+".png") // Your image source.
+                .load("https://server.shaneqi.com/upload/pt-"+id) // Your image source.
                 .placeholder(R.drawable.ic_setting_account);
         if (isCircle) {
             int width = imageView.getMeasuredWidth();
