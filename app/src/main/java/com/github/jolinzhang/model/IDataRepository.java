@@ -11,6 +11,8 @@ public interface IDataRepository {
 
     Pet getPet(String id);
 
+    Event getEvent(String id);
+
     void createOrUpdatePet(Pet pet);
 
     void createOrUpdateEvent(Event event);

@@ -112,6 +112,11 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
+    public Event getEvent(String id) {
+        return  realm.copyFromRealm(realm.where(Event.class).equalTo("id", id).findFirst());
+    }
+
+    @Override
     public void createOrUpdatePet(Pet pet) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(pet);
