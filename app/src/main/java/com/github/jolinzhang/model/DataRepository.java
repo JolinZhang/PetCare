@@ -96,7 +96,10 @@ public class DataRepository implements IDataRepository {
     @Override
     public void createOrUpdatePet(PetForm petForm) {
         realm.beginTransaction();
-        Pet pet = realm.createObject(Pet.class, petForm.getId());
+        Pet pet = realm.where(Pet.class).equalTo("id", petForm.getId()).findFirst();
+        if (pet == null) {
+            pet = realm.createObject(Pet.class, petForm.getId());
+        }
         pet.setName(petForm.getName());
         pet.setFemale(petForm.isFemale());
         pet.setBirthday(petForm.getBirthday());
@@ -107,6 +110,7 @@ public class DataRepository implements IDataRepository {
         pet.setVetName(petForm.getVetName());
         pet.setVetPhone(petForm.getVetPhone());
         realm.commitTransaction();
+        DataRepoConfig.getInstance().addPetId(pet.getId());
     }
 
     void invalid() {

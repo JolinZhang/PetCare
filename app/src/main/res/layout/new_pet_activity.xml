@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="petForm" type="com.github.jolinzhang.model.PetForm"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="2dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/new_pet_avatar"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/new_pet_avatar"
+                        android:orientation="vertical">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:hint="ID"
+                            android:text="@{petForm.id}"
+                            android:id="@+id/new_pet_id"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="6dp"
+                            android:layout_height="44dp"
+                            android:hint="Name"
+                            android:id="@+id/new_pet_name"/>
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+                            <RadioButton
+                                android:text="Female"
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:layout_weight="1"
+                                android:id="@+id/new_pet_female"
+                                />
+
+                            <RadioButton
+                                android:text="Male"
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:layout_weight="1"
+                                android:id="@+id/new_pet_male"
+                                />
+                        </RadioGroup></LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:text="Species: "/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:id="@+id/new_pet_species"
+                            />
+
+
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="44dp"
+                        android:focusable="false"
+                        android:text="Birthday: "
+                        android:id="@+id/new_pet_birthday"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="44dp"
+                        android:hint="Vet Name"
+                        android:id="@+id/new_pet_vet_name"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="44dp"
+                        android:hint="Vet Phone"
+                        android:id="@+id/new_pet_vet_phone"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="44dp"
+                        android:hint="Chip ID"
+                        android:id="@+id/new_pet_chip_id"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="44dp"
+                        android:hint="Chip Company"
+                        android:id="@+id/new_pet_chip_company"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Medications"
+                        android:id="@+id/new_pet_medications"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+</layout>

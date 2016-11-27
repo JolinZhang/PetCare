@@ -66,7 +66,7 @@ public class Util {
     public void loadImage(String id, ImageView imageView, boolean isCircle) {
         RequestCreator rc = Picasso.with(context)
                 .load("http://54.191.156.153/avatar/pt-"+id+".png") // Your image source.
-                .placeholder(R.drawable.ic_menu_gallery);
+                .placeholder(R.drawable.ic_setting_account);
         if (isCircle) {
             int width = imageView.getMeasuredWidth();
             rc = rc.transform(new RoundedTransformation(width, 0));
