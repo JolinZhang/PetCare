@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.jolinzhang.model.DataRepoConfig;
 import com.github.jolinzhang.petcare.Adapter.TimeLineAdapter;
 import com.github.jolinzhang.petcare.MainActivity;
 import com.github.jolinzhang.petcare.R;

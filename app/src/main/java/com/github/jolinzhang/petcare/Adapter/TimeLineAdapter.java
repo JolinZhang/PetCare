@@ -8,7 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.jolinzhang.model.DataRepoConfig;
+import com.github.jolinzhang.model.DataRepository;
+import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.R;
+
+import org.w3c.dom.Text;
+
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 /**
  * Created by Jonelezhang on 11/23/16.
@@ -16,16 +24,32 @@ import com.github.jolinzhang.petcare.R;
 
 public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHolder>{
 
+    private RealmResults<Event> events;
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView text;
+        private TextView title;
+        private TextView content;
+        private TextView time;
         public ViewHolder(View view){
             super(view);
-            text = (TextView) view.findViewById(R.id.text);
+            title = (TextView) view.findViewById(R.id.title);
+            content = (TextView) view.findViewById(R.id.content);
+            time = (TextView) view.findViewById(R.id.time);
         }
     }
 
+
     public TimeLineAdapter() {
         super();
+
+
+        DataRepository.getInstance().getPastEvents(new RealmChangeListener<RealmResults<Event>>() {
+            @Override
+            public void onChange(RealmResults<Event> element) {
+                events = element;
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -38,12 +62,15 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.title.setText(events.get(position).getTitle());
+        holder.content.setText(events.get(position).getDescription());
+        holder.time.setText(events.get(position).getDatetime().toString());
     }
 
 
     @Override
     public int getItemCount() {
-        return 10;
+        if(events == null) return 0;
+        return events.size();
     }
 }

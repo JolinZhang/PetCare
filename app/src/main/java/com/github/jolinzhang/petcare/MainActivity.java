@@ -2,6 +2,7 @@ package com.github.jolinzhang.petcare;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
@@ -87,6 +88,15 @@ public class MainActivity extends AppCompatActivity
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //show the menu nav by default
+        menuNav = navigationView.getMenu();
+
+        DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
+            @Override
+            public void onChange(RealmResults<Pet> element) {
+                pets = element;
+            }
+        });
 
         //switch button in nav header.
         header = navigationView.getHeaderView(0);
@@ -94,26 +104,19 @@ public class MainActivity extends AppCompatActivity
         mswitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menuNav = navigationView.getMenu();
+
                 if(switchModel == false){
                     //menu_nav disable, show user_list
                     menuNav.setGroupVisible(R.id.menu_nav, false);
                     menuNav.setGroupVisible(R.id.user_list,true);
-                    pets = DataRepository.getInstance().getPets();
 
-                    pets.addChangeListener(new RealmChangeListener<RealmResults<Pet>>() {
-                        @Override
-                        public void onChange(RealmResults<Pet> element) {
-                            //reset all value after clicking every time
-                          menuNav.removeGroup(R.id.user_list);
-                            pet_id = 0;
-                          for(Pet pet: element){
-                                menuNav.add(R.id.user_list,pet_id++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
-                            }
-                            menuNav.add(R.id.user_list,pet_id++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
-                            switchModel = true;
-                            }
-                    });
+                    menuNav.removeGroup(R.id.user_list);
+                    pet_id = 0;
+                    for(Pet pet: pets){
+                        menuNav.add(R.id.user_list,pet_id++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
+                    }
+                    menuNav.add(R.id.user_list,pet_id++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
+                    switchModel = true;
 
                 }else {
                     //show menu_nav, hide user_list
@@ -215,32 +218,26 @@ public class MainActivity extends AppCompatActivity
         if(pet_id > 0){
             // add new pet
             if(id == (pet_id-1)){
-
-
-
-
-
+                Intent intent = new Intent(this, NewPetActivity.class);
+                startActivity(intent);
             }
             if(id< (pet_id-1)){
+
                 DataRepoConfig.getInstance().setCurrentPetId(pets.get(id).getId());
 
-                DataRepository.getInstance().getPet().addChangeListener(new RealmChangeListener<Pet>() {
+                DataRepository.getInstance().getPet(new RealmChangeListener<Pet>() {
                     @Override
                     public void onChange(Pet element) {
                        TextView name = (TextView) header.findViewById(R.id.nav_pet_name);
                         name.setText(element.getName());
-
                     }
                 });
-
-                menuNav.setGroupVisible(R.id.menu_nav, true);
-                menuNav.setGroupVisible(R.id.user_list,false);
-                switchModel = false;
-                return true;
             }
+            menuNav.setGroupVisible(R.id.menu_nav, true);
+            menuNav.setGroupVisible(R.id.user_list,false);
         }
 
-
+        switchModel = false;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
