@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".NewPetActivity"/>
         <activity android:name=".NewEventActivity"/>
+        <activity android:name=".EventActivity"/>
 
         <activity
             android:name=".MainActivity"
