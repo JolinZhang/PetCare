@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.jolinzhang.petcare.Adapter.TimeLineAdapter;
+import com.github.jolinzhang.petcare.MainActivity;
 import com.github.jolinzhang.petcare.R;
 
 /**
@@ -25,8 +26,9 @@ public class TimeLineFragment extends Fragment{
         View view = inflater.inflate(R.layout.time_line_fragment, container,false);
 
         //change fragment title
-//        getActionBar().setTitle("Time Line");
+        getActivity().setTitle("Time Line");
 
+        //Recycler
         timeLineRecycler = (RecyclerView) view.findViewById(R.id.timeLineRecycler);
         layoutManager = new LinearLayoutManager(getActivity());
         timeLineRecycler.setLayoutManager(layoutManager);

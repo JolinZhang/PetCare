@@ -5,6 +5,7 @@
     <TextView
         android:layout_height="30dp"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_account"
         android:drawablePadding="5dp"
         android:id="@+id/myAccount"
@@ -16,6 +17,7 @@
     <TextView
         android:layout_height="30dp"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_notification"
         android:drawablePadding="5dp"
         android:id="@+id/notification"
@@ -27,6 +29,7 @@
     <TextView
         android:layout_height="30dp"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_general"
         android:drawablePadding="5dp"
         android:id="@+id/general"
@@ -37,6 +40,7 @@
     <TextView
         android:layout_height="30dp"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_facebook"
         android:drawablePadding="5dp"
         android:id="@+id/shareUsOnFacebook"
@@ -48,6 +52,7 @@
     <TextView
         android:layout_height="30dp"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_twitter"
         android:drawablePadding="5dp"
         android:id="@+id/followUsOnTwitter"
@@ -59,6 +64,7 @@
     <TextView
         android:layout_height="30dp"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_help"
         android:drawablePadding="5dp"
         android:id="@+id/helpAndFeedback"

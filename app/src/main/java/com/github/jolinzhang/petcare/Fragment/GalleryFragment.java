@@ -24,6 +24,11 @@ public class GalleryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.gallery_fragment,container,false);
+
+        //change fragment title
+        getActivity().setTitle("Gallery");
+
+        //Recycler
         galleryReclerView = (RecyclerView) view.findViewById(R.id.galleryRecycler);
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);

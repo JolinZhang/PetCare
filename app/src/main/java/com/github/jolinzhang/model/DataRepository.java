@@ -3,6 +3,8 @@ package com.github.jolinzhang.model;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.util.Set;
+
 import io.realm.ObjectServerError;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -60,8 +62,10 @@ public class DataRepository implements IDataRepository {
     @Override
     public RealmResults<Pet> getPets() {
         if (pets != null) { return pets; }
+        Set<String> sss = DataRepoConfig.getInstance().getPetIds();
+        String[] ss = sss.toArray(new String[sss.size()]);
         return realm.where(Pet.class)
-                .in("id", (String[]) DataRepoConfig.getInstance().getPetIds().toArray())
+                .in("id", ss)
                 .findAllSortedAsync("id");
     }
 
