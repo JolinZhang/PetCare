@@ -1,5 +1,6 @@
 package com.github.jolinzhang.model;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -8,20 +9,16 @@ import io.realm.RealmResults;
 
 public interface IDataRepository {
 
-    Pet getPet();
-
     Pet getPet(String id);
-
-    RealmResults<Pet> getPets();
-
-    RealmResults<Event> getPastEvents();
-
-    RealmResults<Event> getPastEventsWithPicture();
-
-    RealmResults<Event> getFutureEvents();
 
     void createOrUpdatePet(Pet pet);
 
     void createOrUpdateEvent(Event event);
+
+    void getPet(RealmChangeListener<Pet> listener);
+    void getPets(RealmChangeListener<RealmResults<Pet>> listener);
+    void getPastEvents(RealmChangeListener<RealmResults<Event>> listener);
+    void getPastEventsWithPicture(RealmChangeListener<RealmResults<Event>> listener);
+    void getFutureEvents(RealmChangeListener<RealmResults<Event>> listener);
 
 }
