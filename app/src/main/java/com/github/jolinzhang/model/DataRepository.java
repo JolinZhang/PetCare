@@ -94,21 +94,9 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
-    public void createOrUpdatePet(PetForm petForm) {
+    public void createOrUpdatePet(Pet pet) {
         realm.beginTransaction();
-        Pet pet = realm.where(Pet.class).equalTo("id", petForm.getId()).findFirst();
-        if (pet == null) {
-            pet = realm.createObject(Pet.class, petForm.getId());
-        }
-        pet.setName(petForm.getName());
-        pet.setFemale(petForm.isFemale());
-        pet.setBirthday(petForm.getBirthday());
-        pet.setSpecies(petForm.getSpecies());
-        pet.setMedications(petForm.getMedications());
-        pet.setChipCompany(petForm.getChipCompany());
-        pet.setChipId(petForm.getChipId());
-        pet.setVetName(petForm.getVetName());
-        pet.setVetPhone(petForm.getVetPhone());
+        realm.copyToRealmOrUpdate(pet);
         realm.commitTransaction();
         DataRepoConfig.getInstance().addPetId(pet.getId());
     }

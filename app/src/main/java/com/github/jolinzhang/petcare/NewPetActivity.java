@@ -2,7 +2,6 @@ package com.github.jolinzhang.petcare;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,14 +19,10 @@ import android.widget.Spinner;
 
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Pet;
-import com.github.jolinzhang.model.PetForm;
-import com.github.jolinzhang.petcare.databinding.NewPetActivityBinding;
 import com.github.jolinzhang.util.Util;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,7 +34,7 @@ import okhttp3.Response;
 
 public class NewPetActivity extends AppCompatActivity {
 
-    private PetForm petForm = new PetForm();
+    private Pet pet = new Pet();
 
     private EditText idEditText;
     private EditText nameEditText;
@@ -67,9 +62,6 @@ public class NewPetActivity extends AppCompatActivity {
         setContentView(R.layout.new_pet_activity);
         setTitle("New Pet");
 
-        NewPetActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.new_pet_activity);
-        binding.setPetForm(petForm);
-
         bindUI();
 
         /* Spinner. */
@@ -82,19 +74,19 @@ public class NewPetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        petForm.setSpecies("Cat");
+                        pet.setSpecies("Cat");
                         break;
                     case 1:
-                        petForm.setSpecies("Dog");
+                        pet.setSpecies("Dog");
                         break;
                     case 2:
-                        petForm.setSpecies("Bird");
+                        pet.setSpecies("Bird");
                         break;
                     case 3:
-                        petForm.setSpecies("Rabbit");
+                        pet.setSpecies("Rabbit");
                         break;
                     case 4:
-                        petForm.setSpecies("Others");
+                        pet.setSpecies("Others");
                         break;
                     default:
                         break;
@@ -115,9 +107,8 @@ public class NewPetActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM. dd, yyyy", Locale.US);
-                petForm.setBirthday(newDate.getTime());
-                birthdayEditText.setText("Birthday: " + dateFormatter.format(newDate.getTime()));
+                pet.setBirthday(newDate.getTime());
+                birthdayEditText.setText("Birthday: " + Util.getInstance().dateFormatter().format(newDate.getTime()));
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
@@ -129,7 +120,7 @@ public class NewPetActivity extends AppCompatActivity {
         });
 
         /* Avatar. */
-        Util.getInstance().loadImage(petForm.getId(), avatarImageView, false);
+        Util.getInstance().loadImage(pet.getId(), avatarImageView, false);
         avatarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,18 +153,18 @@ public class NewPetActivity extends AppCompatActivity {
     }
 
     private void save() {
-        petForm.setId(idEditText.getText().toString().toLowerCase());
-        petForm.setName(nameEditText.getText().toString());
-        petForm.setVetName(vetNameEditText.getText().toString());
-        petForm.setVetPhone(vetPhoneEditText.getText().toString());
-        petForm.setChipId(chipIdEditText.getText().toString());
-        petForm.setChipCompany(chipCompanyEditText.getText().toString());
-        petForm.setMedications(medicationsEditText.getText().toString());
+        pet.setId(idEditText.getText().toString().toLowerCase());
+        pet.setName(nameEditText.getText().toString());
+        pet.setVetName(vetNameEditText.getText().toString());
+        pet.setVetPhone(vetPhoneEditText.getText().toString());
+        pet.setChipId(chipIdEditText.getText().toString());
+        pet.setChipCompany(chipCompanyEditText.getText().toString());
+        pet.setMedications(medicationsEditText.getText().toString());
 
-        petForm.setFemale(femaleButton.isChecked());
+        pet.setFemale(femaleButton.isChecked());
 
         if (avatarUri != null) {
-            Util.getInstance().uploadPicture(avatarUri, petForm.getId(), new Callback() {
+            Util.getInstance().uploadPicture(avatarUri, pet.getId(), new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }
@@ -184,7 +175,7 @@ public class NewPetActivity extends AppCompatActivity {
             });
         }
 
-        DataRepository.getInstance().createOrUpdatePet(petForm);
+        DataRepository.getInstance().createOrUpdatePet(pet);
     }
 
     private void bindUI() {
@@ -212,6 +203,41 @@ public class NewPetActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK){
             avatarUri = data.getData();
         }
+    }
+
+    /* Set pet. */
+    public void setPet(Pet pet) {
+        this.pet = pet;
+        Util.getInstance().loadImage(pet.getId(), avatarImageView, false);
+        idEditText.setText(pet.getId());
+        nameEditText.setText(pet.getName());
+        femaleButton.setChecked(pet.isFemale());
+        switch (pet.getSpecies()) {
+            case "Cat":
+                speciesSpinner.setSelection(0);
+                break;
+            case "Dog":
+                speciesSpinner.setSelection(1);
+                break;
+            case "Bird":
+                speciesSpinner.setSelection(2);
+                break;
+            case "Rabbit":
+                speciesSpinner.setSelection(3);
+                break;
+            case "Others":
+                speciesSpinner.setSelection(4);
+                break;
+            default:
+                break;
+
+        }
+        birthdayEditText.setText("Birthday: " + Util.getInstance().dateFormatter().format(pet.getBirthday()));
+        vetPhoneEditText.setText(pet.getVetPhone());
+        vetNameEditText.setText(pet.getVetName());
+        medicationsEditText.setText(pet.getMedications());
+        chipIdEditText.setText(pet.getChipId());
+        chipCompanyEditText.setText(pet.getChipCompany());
     }
 
 }

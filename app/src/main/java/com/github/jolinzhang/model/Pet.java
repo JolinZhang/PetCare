@@ -1,5 +1,6 @@
 package com.github.jolinzhang.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmList;
@@ -10,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Shadow on 11/21/16.
  */
 
-public class Pet extends RealmObject {
+public class Pet extends RealmObject implements Serializable {
 
     @PrimaryKey
     private String id;
