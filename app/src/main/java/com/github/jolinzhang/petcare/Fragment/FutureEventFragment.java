@@ -1,8 +1,10 @@
 package com.github.jolinzhang.petcare.Fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.github.jolinzhang.petcare.Adapter.FeatureAdapter;
 import com.github.jolinzhang.petcare.Adapter.TimeLineAdapter;
+import com.github.jolinzhang.petcare.NewEventActivity;
 import com.github.jolinzhang.petcare.R;
 
 /**
@@ -33,6 +36,17 @@ public class FutureEventFragment extends Fragment {
         futureEventRecycler.setLayoutManager(layoutManager);
         adapter = new FeatureAdapter();
         futureEventRecycler.setAdapter(adapter);
+
+
+        //Floating Action Bar action
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(getActivity(), NewEventActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

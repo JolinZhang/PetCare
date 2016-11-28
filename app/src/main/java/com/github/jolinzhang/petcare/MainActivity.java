@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -18,11 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.jolinzhang.model.DataRepoConfig;
 import com.github.jolinzhang.model.DataRepository;
-import com.github.jolinzhang.model.IDataRepoConfig;
 import com.github.jolinzhang.model.Pet;
 import com.github.jolinzhang.petcare.Fragment.FutureEventFragment;
 import com.github.jolinzhang.petcare.Fragment.GalleryFragment;
@@ -30,7 +27,6 @@ import com.github.jolinzhang.petcare.Fragment.SettingFragment;
 import com.github.jolinzhang.petcare.Fragment.TimeLineFragment;
 
 import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity
@@ -69,16 +65,6 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.content_scrolling, timeLineFragment,"TimeLineFragment")
                 .commit();
 
-        //Floating Action Bar action
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -115,7 +101,7 @@ public class MainActivity extends AppCompatActivity
                     for(Pet pet: pets){
                         menuNav.add(R.id.user_list,pet_id++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
                     }
-                    menuNav.add(R.id.user_list,pet_id++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
+                    menuNav.add(R.id.user_list,pet_id++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add_circle);
                     switchModel = true;
 
                 }else {

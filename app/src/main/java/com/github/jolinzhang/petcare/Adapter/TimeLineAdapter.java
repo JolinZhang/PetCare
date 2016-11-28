@@ -2,6 +2,8 @@ package com.github.jolinzhang.petcare.Adapter;
 
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.github.jolinzhang.model.DataRepoConfig;
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
+import com.github.jolinzhang.petcare.EventActivity;
 import com.github.jolinzhang.petcare.R;
 
 import org.w3c.dom.Text;
@@ -25,6 +28,7 @@ import io.realm.RealmResults;
 public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHolder>{
 
     private RealmResults<Event> events;
+    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView title;
@@ -39,10 +43,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
     }
 
 
-    public TimeLineAdapter() {
+    public TimeLineAdapter(Context context) {
         super();
-
-
+        this.context = context;
         DataRepository.getInstance().getPastEvents(new RealmChangeListener<RealmResults<Event>>() {
             @Override
             public void onChange(RealmResults<Event> element) {
@@ -61,10 +64,20 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(events.get(position).getTitle());
         holder.content.setText(events.get(position).getDescription());
         holder.time.setText(events.get(position).getDatetime().toString());
+        //item click issue
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventActivity.class);
+                String event_id = events.get(position).getId();
+                intent.putExtra("event_id",event_id);
+                context.startActivity(intent);
+            }
+        });
     }
 
 
