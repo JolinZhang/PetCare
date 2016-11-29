@@ -2,10 +2,10 @@ package com.github.jolinzhang.petcare;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,8 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.jolinzhang.model.DataRepoConfig;
 import com.github.jolinzhang.model.DataRepository;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView mswitch;
     private boolean  switchModel = false;
     private RealmResults<Pet> pets;
-    private int  pet_id = 0;
+    private int petId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,15 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChange(RealmResults<Pet> element) {
                 pets = element;
-            }
+                menuNav.removeGroup(R.id.user_list);
+                petId = 0;
+                if (pets != null) {
+                    for(Pet pet: pets){
+                        menuNav.add(R.id.user_list, petId++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
+                    }
+                }
+                menuNav.add(R.id.user_list, petId++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
+                menuNav.add(R.id.user_list, petId++,Menu.NONE,"New Pet").setIcon(R.drawable.ic_menu_add);}
         });
 
         //switch button in nav header.
@@ -95,13 +106,6 @@ public class MainActivity extends AppCompatActivity
                     //menu_nav disable, show user_list
                     menuNav.setGroupVisible(R.id.menu_nav, false);
                     menuNav.setGroupVisible(R.id.user_list,true);
-
-                    menuNav.removeGroup(R.id.user_list);
-                    pet_id = 0;
-                    for(Pet pet: pets){
-                        menuNav.add(R.id.user_list,pet_id++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
-                    }
-                    menuNav.add(R.id.user_list,pet_id++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add_circle);
                     switchModel = true;
 
                 }else {
@@ -149,12 +153,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -163,7 +161,7 @@ public class MainActivity extends AppCompatActivity
 
         transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        
+
         if (id == R.id.timeLine) {
             //connect to timeLine Fragment
             timeLineFragment = (TimeLineFragment) fragmentManager.findFragmentByTag("TimeLineFragment");
@@ -171,7 +169,7 @@ public class MainActivity extends AppCompatActivity
                 timeLineFragment = new TimeLineFragment();
             }
             transaction.replace(R.id.content_scrolling, timeLineFragment,"TimeLineFragment")
-            .commit();
+                    .commit();
 
         } else if (id == R.id.featureEvent) {
             futureEventFragment = (FutureEventFragment) fragmentManager.findFragmentByTag("FutureEventFragment");
@@ -201,20 +199,21 @@ public class MainActivity extends AppCompatActivity
 
         //handle change pet event here
 
-        if(pet_id > 0){
+        if(petId > 0){
             // add new pet
-            if(id == (pet_id-1)){
+            if(id == (petId - 1)){
                 Intent intent = new Intent(this, NewPetActivity.class);
                 startActivity(intent);
-            }
-            if(id< (pet_id-1)){
+            } else if (id == (petId - 2)) {
+                showAddPetDiablog();
+            } else if(id< (petId - 2)){
 
                 DataRepoConfig.getInstance().setCurrentPetId(pets.get(id).getId());
 
                 DataRepository.getInstance().getPet(new RealmChangeListener<Pet>() {
                     @Override
                     public void onChange(Pet element) {
-                       TextView name = (TextView) header.findViewById(R.id.nav_pet_name);
+                        TextView name = (TextView) header.findViewById(R.id.nav_pet_name);
                         name.setText(element.getName());
                     }
                 });
@@ -228,5 +227,41 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    private void showAddPetDiablog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("Add Pet");
+        alertDialog.setMessage("Enter Pet ID");
+
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+
+        alertDialog.setPositiveButton("ADD",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String id = input.getText().toString();
+                        Pet pet = DataRepository.getInstance().getPet(id);
+                        if (pet == null) {
+                            Toast.makeText(getApplicationContext(), "Invalid ID!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            DataRepoConfig.getInstance().addPetId(id);
+                            dialog.cancel();
+                        }
+                    }
+                });
+
+        alertDialog.setNegativeButton("CANCEL",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
     }
 }

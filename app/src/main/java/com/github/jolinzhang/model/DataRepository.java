@@ -27,12 +27,13 @@ public class DataRepository implements IDataRepository {
     public static final String AUTH_URL = "http://" + "138.68.55.252" + ":9080/auth";
     public static final String REALM_URL = "realm://" + "138.68.55.252" + ":9080/~/petcare";
 
-    public static IDataRepository getInstance() { return instance; }
+    public static DataRepository getInstance() { return instance; }
 
     public static void init(Context context) {
         Realm.init(context);
         final DataRepository repo = instance;
         final Context thisContext = context;
+        repo.realm = Realm.getDefaultInstance();
         SyncUser.loginAsync(SyncCredentials.usernamePassword("diva@petcare.com", "can", false), AUTH_URL, new SyncUser.Callback() {
             @Override
             public void onSuccess(SyncUser user) {
@@ -44,7 +45,6 @@ public class DataRepository implements IDataRepository {
             @Override
             public void onError(ObjectServerError error) {
                 Toast.makeText(thisContext, "Failed connecting to database.", Toast.LENGTH_LONG).show();
-                repo.realm = Realm.getDefaultInstance();
             }
         });
     }
@@ -67,15 +67,17 @@ public class DataRepository implements IDataRepository {
     private List<RealmChangeListener<RealmResults<Event>>> futureEventsListeners = new ArrayList<>();
 
     private Pet getPet() {
+        if (pet != null) { return pet; }
         return realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId())
                 .findFirstAsync();
     }
 
-
     private RealmResults<Pet> getPets() {
         if (pets != null) { return pets; }
         Set<String> idsSet = DataRepoConfig.getInstance().getPetIds();
-        String[] idsArray = idsSet.toArray(new String[idsSet.size()]);
+        String[] idsArray;
+        if (idsSet.size() == 0) { idsArray = new String[] {""}; }
+        else { idsArray = idsSet.toArray(new String[idsSet.size()]); }
         return realm.where(Pet.class)
                 .in("id", idsArray)
                 .findAllSortedAsync("id");
@@ -108,12 +110,20 @@ public class DataRepository implements IDataRepository {
 
     @Override
     public Pet getPet(String id) {
-        return realm.copyFromRealm(realm.where(Pet.class).equalTo("id", id).findFirst());
+        try {
+           return realm.copyFromRealm(realm.where(Pet.class).equalTo("id", id).findFirst());
+        } catch (IllegalArgumentException e) {
+           return null;
+        }
     }
 
     @Override
     public Event getEvent(String id) {
-        return  realm.copyFromRealm(realm.where(Event.class).equalTo("id", id).findFirst());
+        try {
+            return realm.copyFromRealm(realm.where(Event.class).equalTo("id", id).findFirst());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     @Override
@@ -122,6 +132,7 @@ public class DataRepository implements IDataRepository {
         realm.copyToRealmOrUpdate(pet);
         realm.commitTransaction();
         DataRepoConfig.getInstance().addPetId(pet.getId());
+        invalidPetIds();
     }
 
     @Override
@@ -168,11 +179,6 @@ public class DataRepository implements IDataRepository {
             getPet().addChangeListener(listener);
         }
 
-        pets = null;
-        for (RealmChangeListener<RealmResults<Pet>> listener: petsListeners) {
-            getPets().addChangeListener(listener);
-        }
-
         pastEvents = null;
         for (RealmChangeListener<RealmResults<Event>> listener: pastEventsListeners) {
             getPastEvents().addChangeListener(listener);
@@ -186,6 +192,13 @@ public class DataRepository implements IDataRepository {
         futureEvents = null;
         for (RealmChangeListener<RealmResults<Event>> listener: futureEventsListeners) {
             getFutureEvents().addChangeListener(listener);
+        }
+    }
+
+    void invalidPetIds() {
+        pets = null;
+        for (RealmChangeListener<RealmResults<Pet>> listener: petsListeners) {
+            getPets().addChangeListener(listener);
         }
     }
 
