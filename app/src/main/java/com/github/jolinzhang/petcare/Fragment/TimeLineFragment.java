@@ -25,6 +25,14 @@ public class TimeLineFragment extends Fragment{
     private RecyclerView timeLineRecycler;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        adapter = new TimeLineAdapter(getActivity());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.time_line_fragment, container,false);
@@ -37,7 +45,6 @@ public class TimeLineFragment extends Fragment{
         layoutManager = new LinearLayoutManager(getActivity());
         timeLineRecycler.setLayoutManager(layoutManager);
 
-        adapter = new TimeLineAdapter(view.getContext());
         timeLineRecycler.setAdapter(adapter);
 
 

@@ -115,7 +115,7 @@ public class DataRepository implements IDataRepository {
                 .findAllSortedAsync("id");
     }
 
-    public RealmResults<Event> getPastEvents() {
+    private RealmResults<Event> getPastEvents() {
         if (pastEvents != null) { return pastEvents; }
         return realm.where(Event.class)
                 .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())

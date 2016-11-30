@@ -22,6 +22,13 @@ import com.github.jolinzhang.petcare.R;
 public class GalleryFragment extends Fragment {
     private RecyclerView galleryReclerView;
     private RecyclerView.Adapter adapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new GalleryAdapter();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.gallery_fragment,container,false);
@@ -39,7 +46,6 @@ public class GalleryFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         galleryReclerView.setLayoutManager(layoutManager);
 
-        adapter = new GalleryAdapter();
         galleryReclerView.setAdapter(adapter);
 
         return view;

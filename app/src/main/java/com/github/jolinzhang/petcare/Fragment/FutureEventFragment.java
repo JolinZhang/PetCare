@@ -25,6 +25,13 @@ public class FutureEventFragment extends Fragment {
     private RecyclerView futureEventRecycler;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new FutureAdapter(getActivity());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.future_event_fragment,container, false);
@@ -35,7 +42,6 @@ public class FutureEventFragment extends Fragment {
         futureEventRecycler = (RecyclerView) view.findViewById(R.id.futureEventRecycler);
         layoutManager = new LinearLayoutManager(getActivity());
         futureEventRecycler.setLayoutManager(layoutManager);
-        adapter = new FutureAdapter(getActivity());
         futureEventRecycler.setAdapter(adapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(futureEventRecycler.getContext(),

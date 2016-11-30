@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
             timeLineFragment = new TimeLineFragment();
         }
         transaction.replace(R.id.content_scrolling, timeLineFragment,"TimeLineFragment")
+                .addToBackStack("TimeLineFragment")
                 .commit();
 
         //action for drawerLayout
@@ -203,6 +204,7 @@ public class MainActivity extends AppCompatActivity
                 timeLineFragment = new TimeLineFragment();
             }
             transaction.replace(R.id.content_scrolling, timeLineFragment,"TimeLineFragment")
+                    .addToBackStack("TimeLineFragment")
                     .commit();
 
         } else if (id == R.id.featureEvent) {
@@ -212,6 +214,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             transaction.replace(R.id.content_scrolling, futureEventFragment, "FutureEventFragment")
+                    .addToBackStack("FutureEventFragment")
                     .commit();
         } else if (id == R.id.gallery) {
             galleryFragment = (GalleryFragment) fragmentManager.findFragmentByTag("GalleryFragment");
@@ -219,6 +222,7 @@ public class MainActivity extends AppCompatActivity
                 galleryFragment = new GalleryFragment();
             }
             transaction.replace(R.id.content_scrolling, galleryFragment, "GalleryFragment")
+                    .addToBackStack("GalleryFragment")
                     .commit();
 
         }else if(id == R.id.onThisDay){
@@ -227,6 +231,7 @@ public class MainActivity extends AppCompatActivity
                 onThisDayFragment = new OnThisDayFragment();
             }
             transaction.replace(R.id.content_scrolling, onThisDayFragment,"OnThisDayFragment")
+                    .addToBackStack("OnThisDayFragment")
                     .commit();
         } else if (id == R.id.setting) {
             settingFragment = (SettingFragment) fragmentManager.findFragmentByTag("SettingFragment");
@@ -234,6 +239,7 @@ public class MainActivity extends AppCompatActivity
                 settingFragment = new SettingFragment();
             }
             transaction.replace(R.id.content_scrolling,settingFragment,"SettingFragment")
+                    .addToBackStack("SettingFragment")
                     .commit();
         }
 
