@@ -139,6 +139,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
 
     }
 
+    //edit content in event
     public void setEvent(Event event){
         titleEditText.setText(event.getTitle());
         descriptionEditText.setText(event.getDescription());
@@ -146,9 +147,6 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         if(pictureUri == null){
             Util.getInstance().loadImage(event.getId(), pictureImageView, false);
         }
-
-
-
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.jolinzhang.model.DataRepoConfig;
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.util.Util;
@@ -76,7 +77,7 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.delete_event:
-
+                DataRepository.getInstance().deleteEvent(event.getId());
                 break;
         }
 
