@@ -16,10 +16,6 @@ import android.widget.TextView;
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.util.Util;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.IOException;
 
@@ -45,7 +41,6 @@ public class EventActivity extends AppCompatActivity {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
