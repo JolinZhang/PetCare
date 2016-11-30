@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -51,7 +52,6 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
     private EditText titleEditText;
     private EditText descriptionEditText;
     private ImageView pictureImageView;
-    private TextView locationTextView;
     private ImageButton pictureButton;
     private ImageButton locationButton;
     private ImageButton dateButton;
@@ -95,6 +95,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                locationButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_location_on_red));
                 requestLocation();
             }
         });
@@ -130,6 +131,8 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             setEvent(DataRepository.getInstance().getEvent(eventId));
         }
 
+        pictureImageView.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -146,7 +149,6 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
                 break;
             case R.id.save_action:
                 save();
-                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -163,14 +165,12 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             info += "\n";
             info += Util.getInstance().dateFormatter().format(event.getDatetime());
         }
-        locationTextView.setText(info);
     }
 
     private void bindUI() {
         titleEditText = (EditText) findViewById(R.id.new_event_title);
         descriptionEditText = (EditText) findViewById(R.id.new_event_description);
         pictureImageView = (ImageView) findViewById(R.id.new_event_picture);
-        locationTextView = (TextView) findViewById(R.id.new_event_location_info);
         pictureButton = (ImageButton) findViewById(R.id.new_event_picture_button);
         locationButton = (ImageButton) findViewById(R.id.new_event_location);
         dateButton = (ImageButton) findViewById(R.id.new_event_date);
@@ -189,6 +189,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+                    finish();
                 }
             });
         }
@@ -200,6 +201,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             event.setLatitude(location.getLatitude());
         }
         DataRepository.getInstance().createOrUpdateEvent(event);
+        if (pictureUri == null) { finish(); }
     }
 
     /* Image picker. */
@@ -208,6 +210,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             pictureUri = data.getData();
+            pictureImageView.setVisibility(View.VISIBLE);
             Util.getInstance().loadImage(pictureUri, pictureImageView);
         }
     }
@@ -262,6 +265,8 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         this.event = event;
         titleEditText.setText(this.event.getTitle());
         descriptionEditText.setText(this.event.getDescription());
-        if (this.event.hasPicture()) { Util.getInstance().loadImage(this.event.getId(), pictureImageView, false); }
+        if (this.event.hasPicture()) {
+            pictureImageView.setVisibility(View.VISIBLE);
+            Util.getInstance().loadImage(this.event.getId(), pictureImageView, false); }
     }
 }

@@ -38,8 +38,8 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:id="@+id/new_event_picture"/>
+                    android:id="@+id/new_event_picture"
+                    android:layout_height="200dp" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -58,15 +58,10 @@
                     android:hint="Description"
                     android:gravity="top"
                     android:ems="10"
+                    android:lines="3"
                     android:id="@+id/new_event_description"
                     />
 
-
-                <TextView
-                    android:text="Location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/new_event_location_info" />
 
             </LinearLayout>
         </ScrollView>
