@@ -140,8 +140,12 @@ public class DataRepository implements IDataRepository {
     }
 
     private RealmResults<Event> getEventsOnThisDay() {
+        //  TODO
         if (eventsOnThisDay != null) { return eventsOnThisDay; }
-        return null;
+        return realm.where(Event.class)
+                .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
+                .equalTo("isCompleted", false)
+                .findAllSortedAsync("datetime");
     }
 
     @Override
