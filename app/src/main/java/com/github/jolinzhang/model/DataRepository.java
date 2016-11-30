@@ -69,7 +69,7 @@ public class DataRepository implements IDataRepository {
     private Pet getPet() {
         if (pet != null) { return pet; }
         return realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId())
-                .findFirst();
+                .findFirstAsync();
     }
 
     private RealmResults<Pet> getPets() {
@@ -137,7 +137,7 @@ public class DataRepository implements IDataRepository {
 
     @Override
     public void createOrUpdateEvent(Event event) {
-        Pet owner = getPet();
+        Pet owner = realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId()).findFirst();
         realm.beginTransaction();
         event.setOwner(owner);
         realm.copyToRealmOrUpdate(event);
