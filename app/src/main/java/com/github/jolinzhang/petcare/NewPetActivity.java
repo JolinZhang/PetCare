@@ -138,7 +138,7 @@ public class NewPetActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.form_menu, menu);
+        getMenuInflater().inflate(R.menu.event_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

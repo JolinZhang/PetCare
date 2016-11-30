@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +49,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
     private EditText titleEditText;
     private EditText descriptionEditText;
     private ImageView pictureImageView;
-    private TextView infoTextView;
+    private TextView locationTextView;
     private ImageButton pictureButton;
     private ImageButton locationButton;
     private ImageButton dateButton;
@@ -66,11 +67,13 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_activity);
-        setTitle("New Event");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.setTitle("New Event");
 
+        //location service
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-
 
         bindUI();
 
@@ -132,18 +135,18 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.form_menu, menu);
+        getMenuInflater().inflate(R.menu.event_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save_action:
-                save();
+            case android.R.id.home:
                 finish();
                 break;
-            case R.id.cancel_action:
+            case R.id.save_action:
+                save();
                 finish();
                 break;
         }
@@ -161,14 +164,14 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             info += "\n";
             info += Util.getInstance().dateFormatter().format(event.getDatetime());
         }
-        infoTextView.setText(info);
+        locationTextView.setText(info);
     }
 
     private void bindUI() {
         titleEditText = (EditText) findViewById(R.id.new_event_title);
         descriptionEditText = (EditText) findViewById(R.id.new_event_description);
         pictureImageView = (ImageView) findViewById(R.id.new_event_picture);
-        infoTextView = (TextView) findViewById(R.id.new_event_info);
+        locationTextView = (TextView) findViewById(R.id.new_event_location_info);
         pictureButton = (ImageButton) findViewById(R.id.new_event_picture_button);
         locationButton = (ImageButton) findViewById(R.id.new_event_location);
         dateButton = (ImageButton) findViewById(R.id.new_event_date);
@@ -192,8 +195,10 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             });
         }
         event.setDatetime(calendar.getTime());
-        event.setLongitude(location.getLongitude());
-        event.setLatitude(location.getLatitude());
+        if(location != null){
+            event.setLongitude(location.getLongitude());
+            event.setLatitude(location.getLatitude());
+        }
         DataRepository.getInstance().createOrUpdateEvent(event);
     }
 

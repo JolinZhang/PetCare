@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ScrollView
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,29 +35,32 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="Title"
+                android:maxLines="1"
                 android:ems="10"
                 android:id="@+id/new_event_title" />
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:inputType="textPersonName"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
                 android:hint="Description"
                 android:gravity="top"
                 android:ems="10"
                 android:id="@+id/new_event_description"
                 />
-            
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:id="@+id/new_event_picture"/>
 
             <TextView
-                android:text="TextView"
+                android:text="Location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/new_event_info" />
+                android:id="@+id/new_event_location_info" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,9 +100,9 @@
                     android:id="@+id/new_event_complete"
                     android:src="@drawable/ic_menu_camera"
                     android:background="@null"/>
-
-
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

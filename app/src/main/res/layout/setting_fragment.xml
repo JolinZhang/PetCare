@@ -8,8 +8,8 @@
         android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_setting_account"
         android:drawablePadding="5dp"
-        android:id="@+id/myAccount"
-        android:text="My Account"
+        android:id="@+id/myPets"
+        android:text="My Pets"
         android:textSize="16sp"
         android:gravity="center_vertical">
     </TextView>

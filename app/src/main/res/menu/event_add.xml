@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="CANCEL"
-        app:showAsAction="ifRoom"
-        android:id="@+id/cancel_action"
-        />
-
-    <item
         android:title="SAVE"
         app:showAsAction="ifRoom"
         android:id="@+id/save_action"/>

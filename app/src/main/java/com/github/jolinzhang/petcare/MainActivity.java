@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private  View header;
     private Menu menuNav;
     private ImageView mswitch;
-    private boolean  switchModel = false;
+    private boolean switchModel = false;
     private RealmResults<Pet> pets;
     private int petId = 0;
 
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.content_scrolling, timeLineFragment,"TimeLineFragment")
                 .commit();
 
+        //action for drawerLayout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,21 +81,6 @@ public class MainActivity extends AppCompatActivity
         //show the menu nav by default
         menuNav = navigationView.getMenu();
 
-        DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
-            @Override
-            public void onChange(RealmResults<Pet> element) {
-                pets = element;
-                menuNav.removeGroup(R.id.user_list);
-                petId = 0;
-                if (pets != null) {
-                    for(Pet pet: pets){
-                        menuNav.add(R.id.user_list, petId++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
-                    }
-                }
-                menuNav.add(R.id.user_list, petId++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
-                menuNav.add(R.id.user_list, petId++,Menu.NONE,"New Pet").setIcon(R.drawable.ic_menu_add);}
-        });
-
         //switch button in nav header.
         header = navigationView.getHeaderView(0);
         mswitch = (ImageView) header.findViewById(R.id.switchButton);
@@ -103,6 +89,22 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 if(switchModel == false){
+                    //operations on user_list
+                    DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
+                        @Override
+                        public void onChange(RealmResults<Pet> element) {
+                            pets = element;
+                            menuNav.removeGroup(R.id.user_list);
+                            petId = 0;
+                            if (pets != null) {
+                                for(Pet pet: pets){
+                                    menuNav.add(R.id.user_list, petId++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
+                                }
+                            }
+                            menuNav.add(R.id.user_list, petId++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
+                        }
+                    });
+
                     //menu_nav disable, show user_list
                     menuNav.setGroupVisible(R.id.menu_nav, false);
                     menuNav.setGroupVisible(R.id.user_list,true);
@@ -130,7 +132,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //navigation item select control
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -197,16 +199,12 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        //handle change pet event here
-
+        //handle change pet and add pet here
         if(petId > 0){
             // add new pet
-            if(id == (petId - 1)){
-                Intent intent = new Intent(this, NewPetActivity.class);
-                startActivity(intent);
-            } else if (id == (petId - 2)) {
-                showAddPetDiablog();
-            } else if(id< (petId - 2)){
+            if (id == (petId - 1)) {
+                showDialog();
+            } else if(id< (petId - 1)){
 
                 DataRepoConfig.getInstance().setCurrentPetId(pets.get(id).getId());
 
@@ -217,9 +215,10 @@ public class MainActivity extends AppCompatActivity
                         name.setText(element.getName());
                     }
                 });
+                //after choose a pet, reset menuNav groupVisible
+                menuNav.setGroupVisible(R.id.menu_nav, true);
+                menuNav.setGroupVisible(R.id.user_list,false);
             }
-            menuNav.setGroupVisible(R.id.menu_nav, true);
-            menuNav.setGroupVisible(R.id.user_list,false);
         }
 
         switchModel = false;
@@ -229,6 +228,28 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //add pets
+    private void showDialog(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("The pet already has a pet ID?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        showAddPetDiablog();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, NewPetActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
+
+    }
+
+    //add pet already have a pet ID
     private void showAddPetDiablog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
         alertDialog.setTitle("Add Pet");
@@ -251,10 +272,13 @@ public class MainActivity extends AppCompatActivity
                         } else {
                             DataRepoConfig.getInstance().addPetId(id);
                             dialog.cancel();
+                            //menu_nav disable, show user_list
+                            menuNav.setGroupVisible(R.id.menu_nav, false);
+                            menuNav.setGroupVisible(R.id.user_list,true);
+                            switchModel = true;
                         }
                     }
                 });
-
         alertDialog.setNegativeButton("CANCEL",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
