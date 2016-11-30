@@ -3,6 +3,8 @@ package com.github.jolinzhang.model;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ import io.realm.Sort;
 import io.realm.SyncConfiguration;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
+import io.realm.internal.Util;
 
 /**
  * Created by Shadow on 11/24/16.
@@ -141,11 +144,14 @@ public class DataRepository implements IDataRepository {
     }
 
     private RealmResults<Event> getEventsOnThisDay() {
-        //  TODO
         if (eventsOnThisDay != null) { return eventsOnThisDay; }
+        Calendar begin = Calendar.getInstance();
+        begin.set(2015, 10, 30, 6,0,0);
+        Calendar end = Calendar.getInstance();
+        end.set(2015, 12, 20, 6,0,0);
         return realm.where(Event.class)
-                .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
-                .equalTo("isCompleted", false)
+                .between("datetime", begin.getTime(), end.getTime())
+                .equalTo("isCompleted", true)
                 .findAllSortedAsync("datetime", Sort.DESCENDING);
     }
 
