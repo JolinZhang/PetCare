@@ -11,12 +11,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -97,27 +92,15 @@ public class Util {
 
     //compare data
     public List<List<Date>> getThisDay(Date since, Date today) {
+        return null;
+    }
 
-        Calendar begin = Calendar.getInstance();
-        Calendar finish = Calendar.getInstance();
-        begin.setTime(since);
-        finish.setTime(today);
-        DateFormat formater = new SimpleDateFormat("DD-MM-yyyy");
+    public String getShortMonth(Date date) {
+        return new SimpleDateFormat("MMM", Locale.US).format(date);
+    }
 
-        while (begin.before(finish)&&(begin.get(begin.MONTH)== finish.get(finish.MONTH))
-                &&(begin.get(begin.)== finish.get(finish.)) {
-            // add one month to date per loop
-            String date =  formater.format(begin.getTime()).toUpperCase();
-            System.out.println(date);
-            begin.add(Calendar.YEAR, 1);
-        }
-
-
-
-
-
-
-        return  null;
+    public String getNumberDay(Date date) {
+        return new SimpleDateFormat("dd", Locale.US).format(date);
     }
 
 }

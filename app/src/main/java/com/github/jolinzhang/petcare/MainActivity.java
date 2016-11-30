@@ -29,6 +29,7 @@ import com.github.jolinzhang.petcare.Fragment.GalleryFragment;
 import com.github.jolinzhang.petcare.Fragment.OnThisDayFragment;
 import com.github.jolinzhang.petcare.Fragment.SettingFragment;
 import com.github.jolinzhang.petcare.Fragment.TimeLineFragment;
+import com.github.jolinzhang.util.Util;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
-    private  View header;
+    private View header;
     private Menu menuNav;
-    private ImageView mswitch;
-    private boolean switchModel = false;
+    private ImageView avatar;
+    private boolean switchModel = true;
     private RealmResults<Pet> pets;
     private int petId = 0;
 
@@ -85,43 +86,70 @@ public class MainActivity extends AppCompatActivity
 
         //switch button in nav header.
         header = navigationView.getHeaderView(0);
-        mswitch = (ImageView) header.findViewById(R.id.switchButton);
-        mswitch.setOnClickListener(new View.OnClickListener() {
+        avatar = (ImageView) header.findViewById(R.id.nav_avatar);
+
+        //operations on user_list
+        DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
             @Override
-            public void onClick(View view) {
-
-                if(switchModel == false){
-                    //operations on user_list
-                    DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
-                        @Override
-                        public void onChange(RealmResults<Pet> element) {
-                            pets = element;
-                            menuNav.removeGroup(R.id.user_list);
-                            petId = 0;
-                            if (pets != null) {
-                                for(Pet pet: pets){
-                                    menuNav.add(R.id.user_list, petId++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
-                                }
-                            }
-                            menuNav.add(R.id.user_list, petId++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
-                        }
-                    });
-
-                    //menu_nav disable, show user_list
-                    menuNav.setGroupVisible(R.id.menu_nav, false);
-                    menuNav.setGroupVisible(R.id.user_list,true);
-                    switchModel = true;
-
-                }else {
-                    //show menu_nav, hide user_list
-                    menuNav.setGroupVisible(R.id.menu_nav, true);
-                    menuNav.setGroupVisible(R.id.user_list,false);
-                    switchModel = false;
+            public void onChange(RealmResults<Pet> element) {
+                pets = element;
+                menuNav.removeGroup(R.id.user_list);
+                petId = 0;
+                if (pets != null) {
+                    for(Pet pet: pets){
+                        menuNav.add(R.id.user_list, petId++,Menu.NONE,pet.getName()).setIcon(R.drawable.ic_setting_account);
+                    }
                 }
-
+                menuNav.add(R.id.user_list, petId++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
+                switchNavMenu();
             }
         });
 
+        final TextView name = (TextView) header.findViewById(R.id.nav_pet_name);
+        final ImageView mswitch = (ImageView) header.findViewById(R.id.switchButton);
+        mswitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchModel = !switchModel;
+                switchNavMenu();
+            }
+        });
+
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchModel = !switchModel;
+                switchNavMenu();
+            }
+        });
+        DataRepository.getInstance().getPet(new RealmChangeListener<Pet>() {
+            @Override
+            public void onChange(Pet element) {
+                if (element.isLoaded() && element.isValid()) {
+                    Util.getInstance().loadImage(element.getId(), avatar, true);
+                    name.setText(element.getName());
+                } else {
+                    Util.getInstance().loadImage("INVALIDID", avatar, true);
+                    name.setText("Add your pet here!");
+                }
+            }
+        });
+
+
+    }
+
+    private void switchNavMenu() {
+        if(switchModel == false){
+
+            //menu_nav disable, show user_list
+            menuNav.setGroupVisible(R.id.menu_nav, false);
+            menuNav.setGroupVisible(R.id.user_list,true);
+
+        }else {
+            //show menu_nav, hide user_list
+            menuNav.setGroupVisible(R.id.menu_nav, true);
+            menuNav.setGroupVisible(R.id.user_list,false);
+        }
     }
 
     @Override
@@ -217,20 +245,11 @@ public class MainActivity extends AppCompatActivity
 
                 DataRepoConfig.getInstance().setCurrentPetId(pets.get(id).getId());
 
-                DataRepository.getInstance().getPet(new RealmChangeListener<Pet>() {
-                    @Override
-                    public void onChange(Pet element) {
-                        TextView name = (TextView) header.findViewById(R.id.nav_pet_name);
-                        name.setText(element.getName());
-                    }
-                });
-                //after choose a pet, reset menuNav groupVisible
-                menuNav.setGroupVisible(R.id.menu_nav, true);
-                menuNav.setGroupVisible(R.id.user_list,false);
             }
         }
 
-        switchModel = false;
+        switchModel = true;
+        switchNavMenu();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -280,11 +299,8 @@ public class MainActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Invalid ID!", Toast.LENGTH_SHORT).show();
                         } else {
                             DataRepoConfig.getInstance().addPetId(id);
+                            DataRepoConfig.getInstance().setCurrentPetId(id);
                             dialog.cancel();
-                            //menu_nav disable, show user_list
-                            menuNav.setGroupVisible(R.id.menu_nav, false);
-                            menuNav.setGroupVisible(R.id.user_list,true);
-                            switchModel = true;
                         }
                     }
                 });
