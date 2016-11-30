@@ -1,27 +1,17 @@
 package com.github.jolinzhang.petcare;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.util.Util;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Created by Shadow on 11/27/16.
@@ -34,7 +24,6 @@ public class EventActivity extends AppCompatActivity {
     ImageView pictureImageView;
     TextView locationTextView;
     TextView dateTextView;
-    private Uri pictureUri;
 
     Event event = new Event();
     /**
