@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.R;
+
+import io.realm.RealmResults;
 
 /**
  * Created by Jonelezhang on 11/30/16.
@@ -14,6 +17,7 @@ import com.github.jolinzhang.petcare.R;
 
 public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.ViewHolder> {
 
+    public RealmResults<Event> events;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView title;

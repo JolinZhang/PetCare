@@ -23,7 +23,7 @@ import io.realm.RealmResults;
 
 public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder>{
 
-    private RealmResults<Event> futureEvents;
+    public RealmResults<Event> futureEvents;
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -42,13 +42,14 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder
 
     public FutureAdapter(Context context) {
         this.context = context;
-        DataRepository.getInstance().getFutureEvents(new RealmChangeListener<RealmResults<Event>>() {
-            @Override
-            public void onChange(RealmResults<Event> element) {
-                futureEvents = element;
-                notifyDataSetChanged();
-            }
-        });
+//        DataRepository.getInstance().getFutureEvents(new RealmChangeListener<RealmResults<Event>>() {
+//            @Override
+//            public void onChange(RealmResults<Event> element) {
+//
+//                futureEvents = element;
+//                notifyDataSetChanged();
+//            }
+//        });
 
     }
 

@@ -27,7 +27,7 @@ import io.realm.RealmResults;
 
 public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHolder>{
 
-    private RealmResults<Event> events;
+    public RealmResults<Event> events;
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -48,13 +48,13 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
     public TimeLineAdapter(Context context) {
         super();
         this.context = context;
-        DataRepository.getInstance().getPastEvents(new RealmChangeListener<RealmResults<Event>>() {
-            @Override
-            public void onChange(RealmResults<Event> element) {
-                events = element;
-                notifyDataSetChanged();
-            }
-        });
+//        DataRepository.getInstance().getPastEvents(new RealmChangeListener<RealmResults<Event>>() {
+//            @Override
+//            public void onChange(RealmResults<Event> element) {
+//                events = element;
+//                notifyDataSetChanged();
+//            }
+//        });
     }
 
     @Override

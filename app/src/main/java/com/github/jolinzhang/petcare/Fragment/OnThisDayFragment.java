@@ -9,8 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.jolinzhang.model.DataRepository;
+import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.Adapter.OnThisDayAdapter;
 import com.github.jolinzhang.petcare.R;
+
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 /**
  * Created by Jonelezhang on 11/29/16.
@@ -20,7 +25,7 @@ public class OnThisDayFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    private OnThisDayAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,18 @@ public class OnThisDayFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-
+        DataRepository.getInstance().getEventsOnThisDay(new RealmChangeListener<RealmResults<Event>>() {
+            @Override
+            public void onChange(final RealmResults<Event> element) {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.events = element;
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
 
 
         return view;

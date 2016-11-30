@@ -1,7 +1,9 @@
 package com.github.jolinzhang.petcare.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +26,7 @@ import io.realm.RealmResults;
  */
 
 public class MyPetsAdapter extends RecyclerView.Adapter<MyPetsAdapter.ViewHolder> {
-    private RealmResults<Pet> pets;
+    public RealmResults<Pet> pets;
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -38,16 +40,8 @@ public class MyPetsAdapter extends RecyclerView.Adapter<MyPetsAdapter.ViewHolder
         }
     }
 
-    public MyPetsAdapter(Context context){
+    public MyPetsAdapter(final Context context){
         this.context = context;
-
-        DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
-            @Override
-            public void onChange(RealmResults<Pet> element) {
-                pets = element;
-                notifyDataSetChanged();
-            }
-        });
     }
 
     @Override

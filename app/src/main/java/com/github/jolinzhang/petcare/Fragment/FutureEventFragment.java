@@ -11,9 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.jolinzhang.model.DataRepository;
+import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.Adapter.FutureAdapter;
 import com.github.jolinzhang.petcare.NewEventActivity;
 import com.github.jolinzhang.petcare.R;
+
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 import static android.widget.LinearLayout.VERTICAL;
 
@@ -24,7 +29,7 @@ import static android.widget.LinearLayout.VERTICAL;
 public class FutureEventFragment extends Fragment {
     private RecyclerView futureEventRecycler;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    private FutureAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,19 @@ public class FutureEventFragment extends Fragment {
             public void onClick(View view) {
                Intent intent = new Intent(getActivity(), NewEventActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        DataRepository.getInstance().getFutureEvents(new RealmChangeListener<RealmResults<Event>>() {
+            @Override
+            public void onChange(final RealmResults<Event> element) {
+                futureEventRecycler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.futureEvents = element;
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
         return view;

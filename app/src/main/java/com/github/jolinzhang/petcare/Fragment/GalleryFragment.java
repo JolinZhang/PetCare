@@ -12,8 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.github.jolinzhang.model.DataRepository;
+import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.Adapter.GalleryAdapter;
 import com.github.jolinzhang.petcare.R;
+
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 /**
  * Created by Jonelezhang on 11/23/16.
@@ -21,7 +26,7 @@ import com.github.jolinzhang.petcare.R;
 
 public class GalleryFragment extends Fragment {
     private RecyclerView galleryReclerView;
-    private RecyclerView.Adapter adapter;
+    private GalleryAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,14 @@ public class GalleryFragment extends Fragment {
         galleryReclerView.setLayoutManager(layoutManager);
 
         galleryReclerView.setAdapter(adapter);
+
+        DataRepository.getInstance().getPastEventsWithPicture(new RealmChangeListener<RealmResults<Event>>() {
+            @Override
+            public void onChange(RealmResults<Event> element) {
+                adapter.pastEventsWithPicture = element;
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         return view;
     }

@@ -22,7 +22,7 @@ import io.realm.RealmResults;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
-    private RealmResults<Event> pastEventsWithPicture;
+    public RealmResults<Event> pastEventsWithPicture;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView image;
@@ -33,13 +33,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     public GalleryAdapter(){
-        DataRepository.getInstance().getPastEventsWithPicture(new RealmChangeListener<RealmResults<Event>>() {
-            @Override
-            public void onChange(RealmResults<Event> element) {
-                pastEventsWithPicture = element;
-                notifyDataSetChanged();
-            }
-        });
+//        DataRepository.getInstance().getPastEventsWithPicture(new RealmChangeListener<RealmResults<Event>>() {
+//            @Override
+//            public void onChange(RealmResults<Event> element) {
+//                pastEventsWithPicture = element;
+//                notifyDataSetChanged();
+//            }
+//        });
     }
 
 

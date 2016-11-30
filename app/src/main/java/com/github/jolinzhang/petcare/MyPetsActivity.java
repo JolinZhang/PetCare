@@ -7,7 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.github.jolinzhang.model.DataRepository;
+import com.github.jolinzhang.model.Pet;
 import com.github.jolinzhang.petcare.Adapter.MyPetsAdapter;
+
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 /**
  * Created by Jonelezhang on 11/29/16.
@@ -16,7 +21,7 @@ import com.github.jolinzhang.petcare.Adapter.MyPetsAdapter;
 public class MyPetsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    static private MyPetsAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,12 +38,26 @@ public class MyPetsActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MyPetsAdapter(getApplicationContext());
+        if (adapter == null) {
+            adapter = new MyPetsAdapter(getApplicationContext());
+        }
         recyclerView.setAdapter(adapter);
+
+        DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
+            @Override
+            public void onChange(final RealmResults<Pet> element) {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.pets = element;
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
 
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
