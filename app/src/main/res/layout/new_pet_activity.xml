@@ -24,6 +24,9 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,16 +45,18 @@
                         android:id="@+id/new_pet_avatar"/>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="200dp"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@+id/new_pet_avatar"
                         android:orientation="vertical">
+
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="44dp"
                             android:layout_marginTop="6dp"
                             android:hint="ID"
                             android:id="@+id/new_pet_id"/>
+
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_marginTop="6dp"
@@ -79,7 +84,16 @@
                                 android:layout_weight="1"
                                 android:id="@+id/new_pet_male"
                                 />
-                        </RadioGroup></LinearLayout>
+                        </RadioGroup>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:id="@+id/new_pet_species"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -87,34 +101,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="44dp"
-                            android:text="Species: "/>
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="44dp"
-                            android:layout_marginTop="6dp"
-                            android:id="@+id/new_pet_species"
-                            />
-
-
-                    </LinearLayout>
-
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_marginTop="6dp"
                         android:layout_height="44dp"
                         android:focusable="false"
-                        android:text="Birthday: "
-                        android:id="@+id/new_pet_birthday"/>
+                        android:id="@+id/new_pet_birthday"
+                        android:hint="Birthday" />
 
                     <EditText
                         android:layout_width="match_parent"
@@ -149,7 +143,7 @@
                         android:id="@+id/new_pet_medications"/>
                 </LinearLayout>
             </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
+        </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -243,7 +243,7 @@ public class NewPetActivity extends AppCompatActivity {
                 break;
 
         }
-        birthdayEditText.setText("Birthday: " + Util.getInstance().dateFormatter().format(pet.getBirthday()));
+        birthdayEditText.setText(Util.getInstance().dateFormatter().format(pet.getBirthday()));
         vetPhoneEditText.setText(pet.getVetPhone());
         vetNameEditText.setText(pet.getVetName());
         medicationsEditText.setText(pet.getMedications());
