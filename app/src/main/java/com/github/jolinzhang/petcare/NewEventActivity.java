@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,10 +27,12 @@ import android.widget.TimePicker;
 
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
+import com.github.jolinzhang.petcare.databinding.NewEventActivityBinding;
 import com.github.jolinzhang.util.Util;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 import okhttp3.Call;
@@ -53,7 +56,6 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
     private ImageButton pictureButton;
     private ImageButton locationButton;
     private ImageButton dateButton;
-    private ImageButton completeButton;
 
     private Uri pictureUri;
 
@@ -98,24 +100,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             }
         });
 
-        completeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                event.setCompleted(!event.isCompleted());
-                refreshInfo();
-            }
-        });
-
-        /* Birthday picker. */
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(year, monthOfYear, dayOfMonth);
-                timePickerDialog.show();
-            }
-
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
+        /* Date time picker. */
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
@@ -124,6 +109,15 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
                 refreshInfo();
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(year, monthOfYear, dayOfMonth);
+                timePickerDialog.show();
+            }
+
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,16 +131,6 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             setEvent(DataRepository.getInstance().getEvent(eventId));
         }
 
-    }
-
-    //edit content in event
-    public void setEvent(Event event){
-        titleEditText.setText(event.getTitle());
-        descriptionEditText.setText(event.getDescription());
-        locationTextView.setText(event.getLongitude() + ", " + event.getLatitude());
-        if(pictureUri == null){
-            Util.getInstance().loadImage(event.getId(), pictureImageView, false);
-        }
     }
 
     @Override
@@ -191,7 +175,6 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         pictureButton = (ImageButton) findViewById(R.id.new_event_picture_button);
         locationButton = (ImageButton) findViewById(R.id.new_event_location);
         dateButton = (ImageButton) findViewById(R.id.new_event_date);
-        completeButton = (ImageButton) findViewById(R.id.new_event_complete);
     }
 
     private void save() {
@@ -211,6 +194,8 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             });
         }
         event.setDatetime(calendar.getTime());
+        if (event.getDatetime().after(new Date())) { event.setCompleted(false);}
+        else { event.setCompleted(true); }
         if(location != null){
             event.setLongitude(location.getLongitude());
             event.setLatitude(location.getLatitude());
@@ -272,5 +257,12 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, this);
+    }
+
+    private void setEvent(Event event) {
+        this.event = event;
+        titleEditText.setText(this.event.getTitle());
+        descriptionEditText.setText(this.event.getDescription());
+        if (this.event.hasPicture()) { Util.getInstance().loadImage(this.event.getId(), pictureImageView, false); }
     }
 }

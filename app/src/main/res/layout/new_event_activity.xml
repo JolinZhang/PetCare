@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -19,90 +19,93 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Title"
-                android:maxLines="1"
-                android:ems="10"
-                android:id="@+id/new_event_title" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:scrollbars="vertical"
-                android:inputType="textMultiLine"
-                android:hint="Description"
-                android:gravity="top"
-                android:ems="10"
-                android:id="@+id/new_event_description"
-                />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/new_event_picture"/>
-
-            <TextView
-                android:text="Location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/new_event_location_info" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="44dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
+                android:orientation="vertical"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:id="@+id/new_event_picture"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="Title"
+                    android:maxLines="1"
+                    android:ems="10"
+                    android:id="@+id/new_event_title" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:inputType="textMultiLine"
+                    android:hint="Description"
+                    android:gravity="top"
+                    android:ems="10"
+                    android:id="@+id/new_event_description"
+                    />
 
 
-                <ImageButton
-                    android:text="Button"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:id="@+id/new_event_picture_button"
-                    android:src="@drawable/ic_menu_camera"
-                    android:background="@null"/>
+                <TextView
+                    android:text="Location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_event_location_info" />
 
-                <ImageButton
-                    android:text="Button"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:id="@+id/new_event_location"
-                    android:src="@drawable/ic_menu_camera"
-                    android:background="@null"/>
-
-                <ImageButton
-                    android:text="Button"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:id="@+id/new_event_date"
-                    android:src="@drawable/ic_menu_camera"
-                    android:background="@null"/>
-
-                <ImageButton
-                    android:text="Button"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:id="@+id/new_event_complete"
-                    android:src="@drawable/ic_menu_camera"
-                    android:background="@null"/>
             </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/new_event_bottom_bar"
+            android:gravity="right">
+
+
+            <ImageButton
+                android:text="Button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:id="@+id/new_event_picture_button"
+                android:src="@drawable/ic_photo"
+                android:background="@null"/>
+
+            <ImageButton
+                android:text="Button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:id="@+id/new_event_location"
+                android:src="@drawable/ic_location_on"
+                android:background="@null"/>
+
+            <ImageButton
+                android:text="Button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:id="@+id/new_event_date"
+                android:src="@drawable/ic_watch_later"
+                android:background="@null"/>
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
