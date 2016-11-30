@@ -231,6 +231,8 @@ public class DataRepository implements IDataRepository {
     }
 
     void invalid() {
+        invalidPetIds();
+
         pet = null;
         for (RealmChangeListener<Pet> listener: petListeners) {
             getPet().addChangeListener(listener);

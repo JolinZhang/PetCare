@@ -71,7 +71,12 @@ public class DataRepoConfig implements IDataRepoConfig {
         newIds.remove(id);
         editor.putStringSet(PET_IDS, newIds);
         editor.commit();
-        DataRepository.getInstance().invalidPetIds();
+        Set<String> petIds = getPetIds();
+        if (petIds.size() > 0 ) {
+            setCurrentPetId(petIds.iterator().next());
+        } else {
+            setCurrentPetId("");
+        }
     }
 
 }
