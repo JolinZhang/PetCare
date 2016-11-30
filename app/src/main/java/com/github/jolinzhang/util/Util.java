@@ -12,7 +12,13 @@ import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import okhttp3.Callback;
@@ -87,6 +93,31 @@ public class Util {
 
     public SimpleDateFormat dateFormatter() {
         return new SimpleDateFormat("MMM. dd, yyyy", Locale.US);
+    }
+
+    //compare data
+    public List<List<Date>> getThisDay(Date since, Date today) {
+
+        Calendar begin = Calendar.getInstance();
+        Calendar finish = Calendar.getInstance();
+        begin.setTime(since);
+        finish.setTime(today);
+        DateFormat formater = new SimpleDateFormat("DD-MM-yyyy");
+
+        while (begin.before(finish)&&(begin.get(begin.MONTH)== finish.get(finish.MONTH))
+                &&(begin.get(begin.)== finish.get(finish.)) {
+            // add one month to date per loop
+            String date =  formater.format(begin.getTime()).toUpperCase();
+            System.out.println(date);
+            begin.add(Calendar.YEAR, 1);
+        }
+
+
+
+
+
+
+        return  null;
     }
 
 }
