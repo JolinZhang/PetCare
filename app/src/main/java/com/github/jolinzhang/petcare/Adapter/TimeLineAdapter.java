@@ -73,10 +73,10 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
             holder.pictureImageView.post(new Runnable() {
                 @Override
                 public void run() {
-                    int width = holder.pictureImageView.getMeasuredWidth();
-                    int height = width;
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-                    holder.pictureImageView.setLayoutParams(layoutParams);
+//                    int width = holder.pictureImageView.getMeasuredWidth();
+//                    int height = width;
+//                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
+//                    holder.pictureImageView.setLayoutParams(layoutParams);
                     Util.getInstance().loadImage(thisEvent.getId(), holder.pictureImageView, false);
                 }
             });
