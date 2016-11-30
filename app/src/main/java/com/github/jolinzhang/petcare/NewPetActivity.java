@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +61,11 @@ public class NewPetActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_pet_activity);
-        setTitle("New Pet");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Pet");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bindUI();
 
@@ -149,7 +154,8 @@ public class NewPetActivity extends AppCompatActivity {
                 save();
                 finish();
                 break;
-            case R.id.cancel_action:
+
+            case android.R.id.home:
                 finish();
                 break;
         }

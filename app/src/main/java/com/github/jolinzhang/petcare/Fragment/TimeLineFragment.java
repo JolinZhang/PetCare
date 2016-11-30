@@ -37,7 +37,7 @@ public class TimeLineFragment extends Fragment{
         layoutManager = new LinearLayoutManager(getActivity());
         timeLineRecycler.setLayoutManager(layoutManager);
 
-        adapter = new TimeLineAdapter(getContext());
+        adapter = new TimeLineAdapter(view.getContext());
         timeLineRecycler.setAdapter(adapter);
 
 
