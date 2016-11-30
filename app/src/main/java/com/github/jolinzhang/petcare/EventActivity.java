@@ -29,8 +29,8 @@ import okhttp3.Response;
 
 public class EventActivity extends AppCompatActivity {
 
-    EditText titleTextView;
-    EditText descriptionTextView;
+    TextView titleTextView;
+    TextView descriptionTextView;
     ImageView pictureImageView;
     TextView locationTextView;
     TextView dateTextView;
@@ -61,45 +61,9 @@ public class EventActivity extends AppCompatActivity {
 
         renderUI();
 
-        //edit title
-        titleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                titleTextView.setCursorVisible(true);
-            }
-        });
-
-        //edit content
-        descriptionTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                descriptionTextView.setCursorVisible(true);
-
-            }
-        });
-
-        //edit picture
-        pictureImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, 1);
-            }
-        });
-
     }
 
 
-    /* Image picker. */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            pictureUri = data.getData();
-            Util.getInstance().loadImage(pictureUri, pictureImageView);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,7 +81,6 @@ public class EventActivity extends AppCompatActivity {
 
             //save what user changed
             case R.id.save_event:
-                save();
                 finish();
                 break;
             case R.id.delete_event:
@@ -129,27 +92,12 @@ public class EventActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void save(){
-        event.setTitle(titleTextView.getText().toString());
-        event.setDescription(titleTextView.getText().toString());
-        if (pictureUri != null) {
-            event.setHasPicture(true);
-            Util.getInstance().uploadPicture(pictureUri, event.getId(), new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                }
-            });
-        }
-        DataRepository.getInstance().createOrUpdateEvent(event);
-    }
+
 
     private void bindUI() {
-        titleTextView = (EditText) findViewById(R.id.event_title);
-        descriptionTextView = (EditText) findViewById(R.id.event_description);
+        titleTextView = (TextView) findViewById(R.id.event_title);
+        descriptionTextView = (TextView) findViewById(R.id.event_description);
         pictureImageView = (ImageView) findViewById(R.id.event_picture);
         locationTextView = (TextView) findViewById(R.id.event_location);
         dateTextView = (TextView) findViewById(R.id.event_date);

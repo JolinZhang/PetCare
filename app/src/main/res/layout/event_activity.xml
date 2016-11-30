@@ -30,22 +30,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:id="@+id/event_title"
-            android:background="@null"
-            android:textCursorDrawable="@null"
-            android:cursorVisible="false"
             />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:id="@+id/event_description"
-            android:background="@null"
-            android:textCursorDrawable="@null"
-            android:cursorVisible="false"
             />
 
         <ImageView
