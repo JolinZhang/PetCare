@@ -26,6 +26,7 @@ import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Pet;
 import com.github.jolinzhang.petcare.Fragment.FutureEventFragment;
 import com.github.jolinzhang.petcare.Fragment.GalleryFragment;
+import com.github.jolinzhang.petcare.Fragment.OnThisDayFragment;
 import com.github.jolinzhang.petcare.Fragment.SettingFragment;
 import com.github.jolinzhang.petcare.Fragment.TimeLineFragment;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     private TimeLineFragment timeLineFragment;
     private FutureEventFragment futureEventFragment;
     private GalleryFragment galleryFragment;
+    private OnThisDayFragment onThisDayFragment;
     private SettingFragment settingFragment;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -189,6 +191,13 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.content_scrolling, galleryFragment, "GalleryFragment")
                     .commit();
 
+        }else if(id == R.id.onThisDay){
+            onThisDayFragment = (OnThisDayFragment) fragmentManager.findFragmentByTag("OnThisDayFragment");
+            if(onThisDayFragment == null){
+                onThisDayFragment = new OnThisDayFragment();
+            }
+            transaction.replace(R.id.content_scrolling, onThisDayFragment,"OnThisDayFragment")
+                    .commit();
         } else if (id == R.id.setting) {
             settingFragment = (SettingFragment) fragmentManager.findFragmentByTag("SettingFragment");
             if(settingFragment == null){
