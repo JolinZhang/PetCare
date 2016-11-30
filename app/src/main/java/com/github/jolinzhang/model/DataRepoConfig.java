@@ -2,6 +2,7 @@ package com.github.jolinzhang.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.ContactsContract;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,45 +39,60 @@ public class DataRepoConfig implements IDataRepoConfig {
 
     private String CURRENT_PET_ID = "CURRENT_PET_ID";
 
-    public void setCurrentPetId(String id) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putString(CURRENT_PET_ID, id);
-        editor.commit();
-        DataRepository.getInstance().invalid();
-    }
-
     String getCurrentPetId() { return getSharePreferences().getString(CURRENT_PET_ID, ""); }
 
     private String PET_IDS = "PET_IDS";
 
-    Set<String> getPetIds() {
+    public Set<String> getPetIds() {
         Set<String> ids = new HashSet<>();
         return getSharePreferences().getStringSet(PET_IDS, ids);
     }
 
+    @Override
+    public void setCurrentPetId(String id) {
+        SharedPreferences.Editor editor = getEditor();
+
+        editor.putString(CURRENT_PET_ID, id);
+
+        editor.commit();
+
+        DataRepository.getInstance().invalidEvents();
+        DataRepository.getInstance().invalidPet();
+    }
+
+    @Override
     public void addPetId(String id) {
         SharedPreferences.Editor editor = getEditor();
+
         Set<String> ids = getPetIds();
         Set<String> newIds = new HashSet<>(ids);
         newIds.add(id);
         editor.putStringSet(PET_IDS, newIds);
+        editor.putString(CURRENT_PET_ID, id);
+
         editor.commit();
-        DataRepository.getInstance().invalidPetIds();
+
+        DataRepository.getInstance().invalidAll();
     }
 
+    @Override
     public void removePetId(String id) {
         SharedPreferences.Editor editor = getEditor();
+
         Set<String> ids = getPetIds();
         Set<String> newIds = new HashSet<>(ids);
         newIds.remove(id);
         editor.putStringSet(PET_IDS, newIds);
-        editor.commit();
-        Set<String> petIds = getPetIds();
-        if (petIds.size() > 0 ) {
-            setCurrentPetId(petIds.iterator().next());
+
+        if (newIds.size() > 0 ) {
+            editor.putString(CURRENT_PET_ID, newIds.iterator().next());
         } else {
-            setCurrentPetId("");
+            editor.putString(CURRENT_PET_ID, "");
         }
+
+        editor.commit();
+
+        DataRepository.getInstance().invalidAll();
     }
 
 }

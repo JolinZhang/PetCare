@@ -10,6 +10,7 @@ import io.realm.ObjectServerError;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import io.realm.SyncConfiguration;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
@@ -114,12 +115,12 @@ public class DataRepository implements IDataRepository {
                 .findAllSortedAsync("id");
     }
 
-    private RealmResults<Event> getPastEvents() {
+    public RealmResults<Event> getPastEvents() {
         if (pastEvents != null) { return pastEvents; }
         return realm.where(Event.class)
                 .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", true)
-                .findAllSortedAsync("datetime");
+                .findAllSortedAsync("datetime", Sort.DESCENDING);
     }
 
     private RealmResults<Event> getPastEventsWithPicture() {
@@ -128,7 +129,7 @@ public class DataRepository implements IDataRepository {
                 .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", true)
                 .equalTo("hasPicture", true)
-                .findAllSortedAsync("datetime");
+                .findAllSortedAsync("datetime", Sort.DESCENDING);
     }
 
     private RealmResults<Event> getFutureEvents() {
@@ -136,7 +137,7 @@ public class DataRepository implements IDataRepository {
         return realm.where(Event.class)
                 .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", false)
-                .findAllSortedAsync("datetime");
+                .findAllSortedAsync("datetime", Sort.ASCENDING);
     }
 
     private RealmResults<Event> getEventsOnThisDay() {
@@ -145,7 +146,7 @@ public class DataRepository implements IDataRepository {
         return realm.where(Event.class)
                 .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", false)
-                .findAllSortedAsync("datetime");
+                .findAllSortedAsync("datetime", Sort.DESCENDING);
     }
 
     @Override
@@ -164,24 +165,6 @@ public class DataRepository implements IDataRepository {
         } catch (IllegalArgumentException e) {
             return null;
         }
-    }
-
-    @Override
-    public void createOrUpdatePet(Pet pet) {
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(pet);
-        realm.commitTransaction();
-        DataRepoConfig.getInstance().addPetId(pet.getId());
-        invalidPetIds();
-    }
-
-    @Override
-    public void createOrUpdateEvent(Event event) {
-        Pet owner = realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId()).findFirst();
-        realm.beginTransaction();
-        event.setOwner(owner);
-        realm.copyToRealmOrUpdate(event);
-        realm.commitTransaction();
     }
 
     @Override
@@ -221,6 +204,23 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
+    public void createOrUpdatePet(Pet pet) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(pet);
+        realm.commitTransaction();
+        DataRepoConfig.getInstance().addPetId(pet.getId());
+    }
+
+    @Override
+    public void createOrUpdateEvent(Event event) {
+        Pet owner = realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId()).findFirst();
+        realm.beginTransaction();
+        event.setOwner(owner);
+        realm.copyToRealmOrUpdate(event);
+        realm.commitTransaction();
+    }
+
+    @Override
     public void deleteEvent(String id) {
         realm.beginTransaction();
         realm.where(Event.class)
@@ -230,14 +230,24 @@ public class DataRepository implements IDataRepository {
         realm.commitTransaction();
     }
 
-    void invalid() {
-        invalidPetIds();
+    void invalidAll() {
 
+        invalidPets();
+
+        invalidPet();
+
+        invalidEvents();
+
+    }
+
+    void invalidPet() {
         pet = null;
         for (RealmChangeListener<Pet> listener: petListeners) {
             getPet().addChangeListener(listener);
         }
+    }
 
+    void invalidEvents() {
         pastEvents = null;
         for (RealmChangeListener<RealmResults<Event>> listener: pastEventsListeners) {
             getPastEvents().addChangeListener(listener);
@@ -259,7 +269,7 @@ public class DataRepository implements IDataRepository {
         }
     }
 
-    void invalidPetIds() {
+    void invalidPets() {
         pets = null;
         for (RealmChangeListener<RealmResults<Pet>> listener: petsListeners) {
             getPets().addChangeListener(listener);

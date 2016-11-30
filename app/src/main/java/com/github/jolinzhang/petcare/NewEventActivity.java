@@ -27,7 +27,6 @@ import android.widget.TimePicker;
 
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
-import com.github.jolinzhang.petcare.databinding.NewEventActivityBinding;
 import com.github.jolinzhang.util.Util;
 
 import java.io.IOException;

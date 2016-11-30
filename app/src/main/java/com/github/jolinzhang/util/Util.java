@@ -69,7 +69,7 @@ public class Util {
 
     public void loadImage(String id, ImageView imageView, boolean isCircle) {
         RequestCreator rc = Picasso.with(context)
-                .load("https://server.shaneqi.com/upload/pt-"+id) // Your image source.
+                .load("https://server.shaneqi.com/upload/pt="+id) // Your image source.
                 .placeholder(R.drawable.ic_setting_account);
         if (isCircle) {
             int width = imageView.getMeasuredWidth();

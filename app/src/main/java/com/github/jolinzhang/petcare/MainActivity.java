@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity
         header = navigationView.getHeaderView(0);
         avatar = (ImageView) header.findViewById(R.id.nav_avatar);
 
+        menuNav.add(R.id.user_list, petId++,Menu.NONE,"Add Pet").setIcon(R.drawable.ic_menu_add);
+        switchNavMenu();
         //operations on user_list
         DataRepository.getInstance().getPets(new RealmChangeListener<RealmResults<Pet>>() {
             @Override
@@ -126,10 +128,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChange(Pet element) {
                 if (element.isLoaded() && element.isValid()) {
-                    Util.getInstance().loadImage(element.getId(), avatar, true);
+                    Util.getInstance().loadImage(element.getId(), avatar, false);
                     name.setText(element.getName());
                 } else {
-                    Util.getInstance().loadImage("INVALIDID", avatar, true);
+                    Util.getInstance().loadImage("INVALIDID", avatar, false);
                     name.setText("Add your pet here!");
                 }
             }
