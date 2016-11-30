@@ -30,7 +30,7 @@ public class OnThisDayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new OnThisDayAdapter();
+        adapter = new OnThisDayAdapter(getActivity());
     }
 
     @Override
