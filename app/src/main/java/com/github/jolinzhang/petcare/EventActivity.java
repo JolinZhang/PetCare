@@ -1,12 +1,15 @@
 package com.github.jolinzhang.petcare;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +27,6 @@ public class EventActivity extends AppCompatActivity {
     TextView titleTextView;
     TextView descriptionTextView;
     ImageView pictureImageView;
-    TextView locationTextView;
     TextView dateTextView;
 
     Event event = new Event();
@@ -77,7 +79,21 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.delete_event:
-                DataRepository.getInstance().deleteEvent(event.getId());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle("Please confirm deletion.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DataRepository.getInstance().deleteEvent(event.getId());
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
                 break;
         }
 
@@ -92,15 +108,15 @@ public class EventActivity extends AppCompatActivity {
         titleTextView = (TextView) findViewById(R.id.event_title);
         descriptionTextView = (TextView) findViewById(R.id.event_description);
         pictureImageView = (ImageView) findViewById(R.id.event_picture);
-        locationTextView = (TextView) findViewById(R.id.event_location);
         dateTextView = (TextView) findViewById(R.id.event_date);
     }
 
     private void renderUI() {
         titleTextView.setText(event.getTitle());
         descriptionTextView.setText(event.getDescription());
-        Util.getInstance().loadImage(event.getId(), pictureImageView, false);
-        locationTextView.setText(event.getLatitude() + ", " + event.getLongitude());
+        if (event.hasPicture()) {
+            Util.getInstance().loadImage(event.getId(), pictureImageView, false);
+        } else { pictureImageView.setVisibility(View.GONE); }
         dateTextView.setText(Util.getInstance().dateFormatter().format(event.getDatetime()));
     }
 

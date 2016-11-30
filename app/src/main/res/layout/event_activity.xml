@@ -30,18 +30,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:id="@+id/event_title"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:id="@+id/event_description"
-            />
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -49,14 +37,30 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:id="@+id/event_location"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_date"
+            android:text="Nov. 4, 2016"
+            android:padding="6dp"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_title"
+            android:padding="6dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="Title"
             />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:id="@+id/event_date"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:id="@+id/event_description"
+            android:text="Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today."
+            android:lineSpacingExtra="2dp"
+            android:textSize="16dp"
             />
 
 
