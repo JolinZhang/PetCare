@@ -5,12 +5,12 @@
         android:id="@+id/menu_nav">
         <item
             android:id="@+id/timeLine"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_timeline"
             android:title="TimeLine" />
         <item
             android:id="@+id/featureEvent"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Feature Event" />
+            android:icon="@drawable/ic_watch_later"
+            android:title="Future Event" />
         <item
             android:id="@+id/gallery"
             android:icon="@drawable/ic_menu_gallery"
@@ -18,7 +18,7 @@
         <item
             android:id="@+id/onThisDay"
             android:icon="@drawable/ic_menu_event"
-            android:title="OnThisDay"
+            android:title="On This Day"
             />
         <item
             android:id="@+id/setting"
