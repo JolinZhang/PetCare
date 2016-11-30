@@ -1,43 +1,70 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:padding="10dp"
     >
-    <ImageView
-        android:layout_height="50dp"
-        android:layout_width="50dp"
-        android:background="@color/colorAccent"/>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         >
-        <RelativeLayout
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/title"
-                android:text="Title1111111xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                android:layout_toStartOf="@+id/time"
-                android:layout_toLeftOf="@+id/time"
-                android:lines="1" />
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/future_item_date_block"
+            android:layout_centerInParent="true"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:id="@+id/time"
-                android:text="Nove 4"/>
-        </RelativeLayout>
-        <TextView
-            android:layout_width="fill_parent"
+                android:id="@+id/future_item_title"
+                android:padding="6dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:text="Title"
+                />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:id="@+id/future_item_description"
+                android:maxLines="1"
+                android:text="Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today.Diva takes a shower today."
+                android:lineSpacingExtra="2dp"
+                android:textSize="16dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/content"
-            android:text="Diva takes a shower today11111"
-            android:lines="1"
-            />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:id="@+id/future_item_date_block"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/future_item_month"
+                android:textAlignment="center"
+                android:text="NOV"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:id="@+id/future_item_day"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:text="30"/>
+
+        </LinearLayout>
+    </RelativeLayout>>
 </LinearLayout>
