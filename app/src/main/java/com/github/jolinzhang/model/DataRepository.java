@@ -94,6 +94,9 @@ public class DataRepository implements IDataRepository {
     private RealmResults<Event> futureEvents;
     private List<RealmChangeListener<RealmResults<Event>>> futureEventsListeners = new ArrayList<>();
 
+    private RealmResults<Event> eventsOnThisDay;
+    private List<RealmChangeListener<RealmResults<Event>>> eventsOnThisDayListeners = new ArrayList<>();
+
     private Pet getPet() {
         if (pet != null) { return pet; }
         return realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId())
@@ -134,6 +137,11 @@ public class DataRepository implements IDataRepository {
                 .equalTo("owner.id", DataRepoConfig.getInstance().getCurrentPetId())
                 .equalTo("isCompleted", false)
                 .findAllSortedAsync("datetime");
+    }
+
+    private RealmResults<Event> getEventsOnThisDay() {
+        if (eventsOnThisDay != null) { return eventsOnThisDay; }
+        return null;
     }
 
     @Override
@@ -202,6 +210,22 @@ public class DataRepository implements IDataRepository {
         getFutureEvents().addChangeListener(listener);
     }
 
+    @Override
+    public void getEventsOnThisDay(RealmChangeListener<RealmResults<Event>> listener) {
+        eventsOnThisDayListeners.add(listener);
+        getEventsOnThisDay().addChangeListener(listener);
+    }
+
+    @Override
+    public void deleteEvent(String id) {
+        realm.beginTransaction();
+        realm.where(Event.class)
+                .equalTo("id", id)
+                .findAll()
+                .deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
     void invalid() {
         pet = null;
         for (RealmChangeListener<Pet> listener: petListeners) {
@@ -221,6 +245,11 @@ public class DataRepository implements IDataRepository {
         futureEvents = null;
         for (RealmChangeListener<RealmResults<Event>> listener: futureEventsListeners) {
             getFutureEvents().addChangeListener(listener);
+        }
+
+        eventsOnThisDay = null;
+        for (RealmChangeListener<RealmResults<Event>> listener: eventsOnThisDayListeners) {
+            getEventsOnThisDay().addChangeListener(listener);
         }
     }
 

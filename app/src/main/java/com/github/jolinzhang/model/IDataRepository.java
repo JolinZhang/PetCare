@@ -23,6 +23,9 @@ public interface IDataRepository {
     void getPastEvents(RealmChangeListener<RealmResults<Event>> listener);
     void getPastEventsWithPicture(RealmChangeListener<RealmResults<Event>> listener);
     void getFutureEvents(RealmChangeListener<RealmResults<Event>> listener);
+    void getEventsOnThisDay(RealmChangeListener<RealmResults<Event>> listener);
+
+    void deleteEvent(String id);
 
     void login(final SyncUser.Callback callback);
 
