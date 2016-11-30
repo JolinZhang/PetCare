@@ -1,5 +1,6 @@
 package com.github.jolinzhang.petcare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -56,7 +57,7 @@ public class EventActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.event_save_delete, menu);
+        getMenuInflater().inflate(R.menu.event_edit_delete, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -69,8 +70,10 @@ public class EventActivity extends AppCompatActivity {
                 break;
 
             //save what user changed
-            case R.id.save_event:
-                finish();
+            case R.id.edit_event:
+                Intent intent = new Intent(EventActivity.this,NewEventActivity.class);
+                intent.putExtra("event_id", event.getId());
+                startActivity(intent);
                 break;
             case R.id.delete_event:
 

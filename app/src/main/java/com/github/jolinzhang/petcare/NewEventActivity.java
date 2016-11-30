@@ -131,6 +131,24 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
                 datePickerDialog.show();
             }
         });
+
+        String eventId = getIntent().getStringExtra("event_id");
+        if (eventId != null) {
+            setEvent(DataRepository.getInstance().getEvent(eventId));
+        }
+
+    }
+
+    public void setEvent(Event event){
+        titleEditText.setText(event.getTitle());
+        descriptionEditText.setText(event.getDescription());
+        locationTextView.setText(event.getLongitude() + ", " + event.getLatitude());
+        if(pictureUri == null){
+            Util.getInstance().loadImage(event.getId(), pictureImageView, false);
+        }
+
+
+
     }
 
     @Override
