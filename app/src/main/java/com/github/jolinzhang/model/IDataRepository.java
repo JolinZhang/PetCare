@@ -2,6 +2,7 @@ package com.github.jolinzhang.model;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.SyncUser;
 
 /**
  * Created by Shadow on 11/24/16.
@@ -22,5 +23,7 @@ public interface IDataRepository {
     void getPastEvents(RealmChangeListener<RealmResults<Event>> listener);
     void getPastEventsWithPicture(RealmChangeListener<RealmResults<Event>> listener);
     void getFutureEvents(RealmChangeListener<RealmResults<Event>> listener);
+
+    void login(final SyncUser.Callback callback);
 
 }

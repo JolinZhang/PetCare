@@ -1,7 +1,6 @@
 package com.github.jolinzhang.model;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,24 +28,53 @@ public class DataRepository implements IDataRepository {
 
     public static DataRepository getInstance() { return instance; }
 
+    private Boolean online = false;
+    private List<SyncUser.Callback> callbacks = new ArrayList<>();
+    private SyncUser user;
+
     public static void init(Context context) {
         Realm.init(context);
-        final DataRepository repo = instance;
-        final Context thisContext = context;
-        repo.realm = Realm.getDefaultInstance();
-        SyncUser.loginAsync(SyncCredentials.usernamePassword("diva@petcare.com", "can", false), AUTH_URL, new SyncUser.Callback() {
-            @Override
-            public void onSuccess(SyncUser user) {
-                SyncConfiguration defaultConfig = new SyncConfiguration.Builder(user, REALM_URL).build();
-                Realm.setDefaultConfiguration(defaultConfig);
-                repo.realm = Realm.getDefaultInstance();
-            }
+        getInstance().realm = Realm.getDefaultInstance();
+        getInstance().login(null);
+    }
 
-            @Override
-            public void onError(ObjectServerError error) {
-                Toast.makeText(thisContext, "Failed connecting to database.", Toast.LENGTH_LONG).show();
-            }
-        });
+    @Override
+    public void login(final SyncUser.Callback callback) {
+
+        /* If in the middle of logging in. */
+        if (online == null) {
+            if (callback != null) { callbacks.add(callback); }
+        }
+        /* If not online. */
+        else if (online == false) {
+            online = null;
+            SyncUser.loginAsync(SyncCredentials.usernamePassword("diva@petcare.com", "can", false), AUTH_URL, new SyncUser.Callback() {
+                @Override
+                public void onSuccess(SyncUser user) {
+                    SyncConfiguration defaultConfig = new SyncConfiguration.Builder(user, REALM_URL).build();
+                    Realm.setDefaultConfiguration(defaultConfig);
+                    getInstance().realm = Realm.getDefaultInstance();
+                    getInstance().user = user;
+                    if (callback != null) { callback.onSuccess(user); }
+                    for (SyncUser.Callback thisCallback: callbacks) { thisCallback.onSuccess(user); }
+                    online = true;
+                }
+
+                @Override
+                public void onError(ObjectServerError error) {
+                    if (callback != null) { callback.onError(error); }
+                    for (SyncUser.Callback thisCallback: callbacks) { thisCallback.onError(error); }
+                    online = false;
+                }
+            });
+        }
+
+        /* If online. */
+        else if (online == true) {
+            callback.onSuccess(user);
+        }
+
+
     }
 
     private Realm realm;
@@ -111,9 +139,9 @@ public class DataRepository implements IDataRepository {
     @Override
     public Pet getPet(String id) {
         try {
-           return realm.copyFromRealm(realm.where(Pet.class).equalTo("id", id).findFirst());
+            return realm.copyFromRealm(realm.where(Pet.class).equalTo("id", id).findFirst());
         } catch (IllegalArgumentException e) {
-           return null;
+            return null;
         }
     }
 

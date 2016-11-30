@@ -1,11 +1,17 @@
 package com.github.jolinzhang.petcare;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import com.github.jolinzhang.model.DataRepository;
+
+import io.realm.ObjectServerError;
+import io.realm.SyncUser;
 
 /**
  * Created by Jonelezhang on 11/26/16.
@@ -22,16 +28,21 @@ public class SplashActivity extends Activity {
 
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
+        final Context context = this;
+        DataRepository.getInstance().login(new SyncUser.Callback() {
             @Override
-            public void run() {
+            public void onSuccess(SyncUser user) {
                 //start MainActivity
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 //close this activity
                 finish();
-
             }
-        },3000);
+
+            @Override
+            public void onError(ObjectServerError error) {
+                Toast.makeText(context, "Failed to connect to database server.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
