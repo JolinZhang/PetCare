@@ -21,7 +21,9 @@ class RoundedTransformation implements com.squareup.picasso.Transformation {
         this.radius = radius;
         this.margin = margin;
     }
-
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     @Override
     public Bitmap transform(final Bitmap source) {
         final Paint paint = new Paint();
@@ -38,7 +40,9 @@ class RoundedTransformation implements com.squareup.picasso.Transformation {
 
         return output;
     }
-
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     @Override
     public String key() {
         return "rounded";

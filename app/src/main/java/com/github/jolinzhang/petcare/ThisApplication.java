@@ -1,7 +1,7 @@
 package com.github.jolinzhang.petcare;
 
 /**
- * Created by Shadow on 11/21/16.
+ * Created by Ru Zhang on 11/21/16.
  */
 
 import android.app.Application;

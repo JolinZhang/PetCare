@@ -30,7 +30,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by Shadow on 11/26/16.
+ * Created by Ru Zhang on 11/26/16.
  */
 
 public class NewPetActivity extends AppCompatActivity {
@@ -57,6 +57,9 @@ public class NewPetActivity extends AppCompatActivity {
 
     RadioButton femaleButton;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,12 +144,18 @@ public class NewPetActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.event_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -162,6 +171,9 @@ public class NewPetActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void save() {
         pet.setId(idEditText.getText().toString().toLowerCase());
         pet.setName(nameEditText.getText().toString());
@@ -188,6 +200,9 @@ public class NewPetActivity extends AppCompatActivity {
         DataRepository.getInstance().createOrUpdatePet(pet);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void bindUI() {
         idEditText = (EditText) findViewById(R.id.new_pet_id);
         nameEditText = (EditText) findViewById(R.id.new_pet_name);
@@ -216,6 +231,9 @@ public class NewPetActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     /* Set pet. */
     public void setPet(Pet pet) {
         this.pet = pet;
@@ -243,7 +261,11 @@ public class NewPetActivity extends AppCompatActivity {
                 break;
 
         }
-        birthdayEditText.setText(Util.getInstance().dateFormatter().format(pet.getBirthday()));
+        if(pet.getBirthday() == null){
+            birthdayEditText.setText("");
+        } else{
+            birthdayEditText.setText(Util.getInstance().dateFormatter().format(pet.getBirthday()));
+        }
         vetPhoneEditText.setText(pet.getVetPhone());
         vetNameEditText.setText(pet.getVetName());
         medicationsEditText.setText(pet.getMedications());

@@ -34,6 +34,9 @@ import com.github.jolinzhang.util.Util;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
+/**
+ *  Ru Zhang - rxz151130
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,6 +55,9 @@ public class MainActivity extends AppCompatActivity
     private RealmResults<Pet> pets;
     private int petId = 0;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +147,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void switchNavMenu() {
         if(switchModel == false){
 
@@ -155,6 +164,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,6 +177,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -172,6 +187,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -187,6 +205,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     //navigation item select control
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -264,6 +285,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     //add pets
     private void showDialog(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);

@@ -31,6 +31,9 @@ public class TimeLineFragment extends Fragment{
     private RecyclerView.LayoutManager layoutManager;
     private TimeLineAdapter adapter;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,9 @@ public class TimeLineFragment extends Fragment{
         adapter = new TimeLineAdapter(getActivity());
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.time_line_fragment, container,false);

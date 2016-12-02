@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.github.jolinzhang.util.Configuration;
 
 /**
- * Created by Shadow on 11/20/16.
+ * Created by Ru Zhang - rxz151130 on 11/20/16.
  */
 
 public class BaseActivity extends AppCompatActivity implements SensorEventListener {
@@ -21,6 +21,9 @@ public class BaseActivity extends AppCompatActivity implements SensorEventListen
 
     private float NIGHT_MODE_THRESHHOLD = 70;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,9 @@ public class BaseActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float newLight = sensorEvent.values[0];
@@ -50,9 +56,15 @@ public class BaseActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {}
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onResume() {
         // Register a listener for the sensor.
@@ -60,6 +72,9 @@ public class BaseActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.registerListener(this, mLight, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onPause() {
         // Be sure to unregister the sensor when the activity pauses.

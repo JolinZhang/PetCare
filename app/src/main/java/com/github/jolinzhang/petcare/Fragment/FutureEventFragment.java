@@ -31,12 +31,18 @@ public class FutureEventFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private FutureAdapter adapter;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new FutureAdapter(getActivity());
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.future_event_fragment,container, false);

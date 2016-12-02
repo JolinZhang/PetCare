@@ -39,6 +39,9 @@ public class Util {
 
     private Context context;
 
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     public void uploadPicture(Uri URI, String id, Callback callback) {
 
         String[] projection = { MediaStore.Images.Media.DATA };
@@ -67,6 +70,9 @@ public class Util {
         client.newCall(request).enqueue(callback);
     }
 
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     public void loadImage(String id, ImageView imageView, boolean isCircle) {
         RequestCreator rc = Picasso.with(context)
                 .load("https://server.shaneqi.com/upload/pt="+id) // Your image source.
@@ -78,6 +84,9 @@ public class Util {
         rc.fit().centerCrop().into(imageView);
     }
 
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     public void loadImage(Uri uri, ImageView imageView) {
         Picasso.with(context)
                 .load(uri)
@@ -86,10 +95,16 @@ public class Util {
                 .into(imageView);
     }
 
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     public SimpleDateFormat dateFormatter() {
         return new SimpleDateFormat("MMM. dd, yyyy", Locale.US);
     }
 
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     //compare data
     public List<List<Date>> getThisDay(Date since, Date today) {
         return null;
@@ -99,6 +114,9 @@ public class Util {
         return new SimpleDateFormat("MMM", Locale.US).format(date);
     }
 
+    /**
+     *  Zengtai Qi- zxq150130
+     */
     public String getNumberDay(Date date) {
         return new SimpleDateFormat("dd", Locale.US).format(date);
     }

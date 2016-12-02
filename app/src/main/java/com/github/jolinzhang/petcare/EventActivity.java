@@ -19,7 +19,7 @@ import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.util.Util;
 
 /**
- * Created by Shadow on 11/27/16.
+ * Created by Ru Zhang - rxz151130 on 11/27/16.
  */
 
 public class EventActivity extends AppCompatActivity {
@@ -30,11 +30,10 @@ public class EventActivity extends AppCompatActivity {
     TextView dateTextView;
 
     Event event = new Event();
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +55,18 @@ public class EventActivity extends AppCompatActivity {
 
     }
 
-
-
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.event_edit_delete, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     //click item on action bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,7 +106,9 @@ public class EventActivity extends AppCompatActivity {
 
 
 
-
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void bindUI() {
         titleTextView = (TextView) findViewById(R.id.event_title);
         descriptionTextView = (TextView) findViewById(R.id.event_description);
@@ -111,6 +116,9 @@ public class EventActivity extends AppCompatActivity {
         dateTextView = (TextView) findViewById(R.id.event_date);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void renderUI() {
         titleTextView.setText(event.getTitle());
         descriptionTextView.setText(event.getDescription());

@@ -23,6 +23,9 @@ public class MyPetsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     static private MyPetsAdapter adapter;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,9 @@ public class MyPetsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

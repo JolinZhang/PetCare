@@ -34,6 +34,9 @@ public class GalleryFragment extends Fragment {
         adapter = new GalleryAdapter();
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.gallery_fragment,container,false);

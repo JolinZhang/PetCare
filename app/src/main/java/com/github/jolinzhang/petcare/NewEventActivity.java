@@ -40,7 +40,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by Shadow on 11/27/16.
+ * Created by Ru Zhang on 11/27/16.
  */
 
 public class NewEventActivity extends AppCompatActivity implements LocationListener {
@@ -64,6 +64,9 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
     Calendar calendar = Calendar.getInstance();
     private TimePickerDialog timePickerDialog;
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,12 +138,18 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
 
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.event_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -154,6 +163,9 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void refreshInfo() {
         String info = "";
         if (location != null) {
@@ -176,6 +188,9 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         dateButton = (ImageButton) findViewById(R.id.new_event_date);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     private void save() {
         event.setId(UUID.randomUUID().toString());
         event.setTitle(titleEditText.getText().toString());
@@ -243,6 +258,9 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
 
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -252,6 +270,9 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         locationManager.removeUpdates(this);
     }
 
+    /**
+     *  Ru Zhang - rxz151130
+     */
     @Override
     protected void onResume() {
         super.onResume();
