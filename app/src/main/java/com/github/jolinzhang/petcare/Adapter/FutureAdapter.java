@@ -18,7 +18,7 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
- * Created by Jonelezhang on 11/25/16.
+ * Created by Zengtai Qi - zxq150130 on 11/25/16.
  */
 
 public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder>{
@@ -26,6 +26,9 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder
     public RealmResults<Event> futureEvents;
     Context context;
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView titleTextView;
         private TextView descriptionTextView;
@@ -40,6 +43,9 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder
         }
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public FutureAdapter(Context context) {
         this.context = context;
 //        DataRepository.getInstance().getFutureEvents(new RealmChangeListener<RealmResults<Event>>() {
@@ -53,6 +59,9 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder
 
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public FutureAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -61,6 +70,9 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder
         return v;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void onBindViewHolder(FutureAdapter.ViewHolder holder, int position) {
         final Event thisEvent = futureEvents.get(position);
@@ -80,6 +92,9 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.ViewHolder
     }
 
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public int getItemCount() {
         if(futureEvents == null) return 0;

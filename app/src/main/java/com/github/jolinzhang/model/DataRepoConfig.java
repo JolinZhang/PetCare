@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Shadow on 11/24/16.
+ * Created by Zengtai Qi - zxq150130 on 11/24/16.
+ * The class stores config info.
  */
 
 public class DataRepoConfig implements IDataRepoConfig {
@@ -29,25 +30,40 @@ public class DataRepoConfig implements IDataRepoConfig {
 
     private String DATA_REPO_CONFIG_NAME = "DATA_REPO_CONFIG_NAME";
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     private SharedPreferences getSharePreferences() {
         return context.getSharedPreferences(DATA_REPO_CONFIG_NAME, Context.MODE_PRIVATE);
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     private SharedPreferences.Editor getEditor() {
         return getSharePreferences().edit();
     }
 
     private String CURRENT_PET_ID = "CURRENT_PET_ID";
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     String getCurrentPetId() { return getSharePreferences().getString(CURRENT_PET_ID, ""); }
 
     private String PET_IDS = "PET_IDS";
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public Set<String> getPetIds() {
         Set<String> ids = new HashSet<>();
         return getSharePreferences().getStringSet(PET_IDS, ids);
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void setCurrentPetId(String id) {
         SharedPreferences.Editor editor = getEditor();
@@ -60,6 +76,9 @@ public class DataRepoConfig implements IDataRepoConfig {
         DataRepository.getInstance().invalidPet();
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void addPetId(String id) {
         SharedPreferences.Editor editor = getEditor();
@@ -75,6 +94,9 @@ public class DataRepoConfig implements IDataRepoConfig {
         DataRepository.getInstance().invalidAll();
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void removePetId(String id) {
         SharedPreferences.Editor editor = getEditor();

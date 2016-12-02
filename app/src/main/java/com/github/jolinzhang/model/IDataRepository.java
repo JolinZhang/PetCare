@@ -5,7 +5,7 @@ import io.realm.RealmResults;
 import io.realm.SyncUser;
 
 /**
- * Created by Shadow on 11/24/16.
+ * Created by Zengtai Qi - zxq150130 on 11/24/16.
  */
 
 public interface IDataRepository {

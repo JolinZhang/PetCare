@@ -18,11 +18,12 @@ import com.github.jolinzhang.petcare.EventActivity;
 import com.github.jolinzhang.petcare.R;
 import com.github.jolinzhang.util.Util;
 
+import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
- * Created by Jonelezhang on 11/23/16.
+ * Created by Zengtai Qi - zxq150130 on 11/23/16.
  */
 
 public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHolder>{
@@ -30,6 +31,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
     public RealmResults<Event> events;
     private Context context;
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView title;
         private TextView content;
@@ -45,6 +49,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
     }
 
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public TimeLineAdapter(Context context) {
         super();
         this.context = context;
@@ -57,6 +64,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
 //        });
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public TimeLineAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -65,6 +75,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
         return v;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Event thisEvent = events.get(position);
@@ -101,6 +114,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
     }
 
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public int getItemCount() {
         if(events == null) return 0;

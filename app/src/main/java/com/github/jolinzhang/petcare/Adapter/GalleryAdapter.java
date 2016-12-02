@@ -17,13 +17,16 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
- * Created by Jonelezhang on 11/23/16.
+ * Created by Zengtai Qi - zxq150130 on 11/23/16.
  */
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
     public RealmResults<Event> pastEventsWithPicture;
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView image;
         public ViewHolder(View itemView) {
@@ -32,6 +35,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         }
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public GalleryAdapter(){
 //        DataRepository.getInstance().getPastEventsWithPicture(new RealmChangeListener<RealmResults<Event>>() {
 //            @Override
@@ -44,6 +50,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
 
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -53,6 +62,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return viewHolder;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -71,6 +83,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public int getItemCount() {
         if(pastEventsWithPicture == null)return 0;

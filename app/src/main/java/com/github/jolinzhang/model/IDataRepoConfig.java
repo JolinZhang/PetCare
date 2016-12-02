@@ -1,7 +1,7 @@
 package com.github.jolinzhang.model;
 
 /**
- * Created by Shadow on 11/24/16.
+ * Created by Zengtai Qi - zxq150130 on 11/24/16.
  */
 
 public interface IDataRepoConfig {

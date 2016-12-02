@@ -22,13 +22,17 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
- * Created by Jonelezhang on 11/29/16.
+ * Created by Zengtai Qi - zxq150130 on 11/29/16.
  */
 
 public class MyPetsAdapter extends RecyclerView.Adapter<MyPetsAdapter.ViewHolder> {
     public RealmResults<Pet> pets;
     private Context context;
 
+
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView petsName;
         private ImageView petsDelete;
@@ -40,10 +44,16 @@ public class MyPetsAdapter extends RecyclerView.Adapter<MyPetsAdapter.ViewHolder
         }
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public MyPetsAdapter(final Context context){
         this.context = context;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public MyPetsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -52,6 +62,9 @@ public class MyPetsAdapter extends RecyclerView.Adapter<MyPetsAdapter.ViewHolder
         return viewHolder;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.petsName.setText(pets.get(position).getName());
@@ -73,6 +86,9 @@ public class MyPetsAdapter extends RecyclerView.Adapter<MyPetsAdapter.ViewHolder
     }
 
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public int getItemCount() {
 

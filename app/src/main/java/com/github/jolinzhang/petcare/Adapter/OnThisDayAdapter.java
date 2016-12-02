@@ -18,7 +18,7 @@ import com.github.jolinzhang.util.Util;
 import io.realm.RealmResults;
 
 /**
- * Created by Jonelezhang on 11/30/16.
+ * Created by Zengtai Qi - zxq150130 on 11/30/16.
  */
 
 public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.ViewHolder> {
@@ -26,6 +26,9 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
     public RealmResults<Event> events;
     private Context context;
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView title;
         private TextView content;
@@ -41,11 +44,17 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
 
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     public OnThisDayAdapter(Context context) {
         super();
         this.context = context;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public OnThisDayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -55,6 +64,9 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
         return viewHolder;
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public void onBindViewHolder(final OnThisDayAdapter.ViewHolder holder, int position) {
         final Event thisEvent = events.get(position);
@@ -90,6 +102,9 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
         });
     }
 
+    /**
+     * Zengtai Qi - zxq150130
+     */
     @Override
     public int getItemCount() {
         if(events == null) return 0;
