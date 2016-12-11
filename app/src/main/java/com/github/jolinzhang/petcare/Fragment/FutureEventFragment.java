@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.jolinzhang.model.DataRepoConfig;
 import com.github.jolinzhang.model.DataRepository;
 import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.Adapter.FutureAdapter;
@@ -59,8 +60,14 @@ public class FutureEventFragment extends Fragment {
                 VERTICAL);
         futureEventRecycler.addItemDecoration(dividerItemDecoration);
 
-        //Floating Action Bar action
+        //Floating Action Bar show
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        if(DataRepoConfig.getInstance().getCurrentPetId() == ""){
+            fab.setVisibility(View.INVISIBLE);
+        }else{
+            fab.setVisibility(View.VISIBLE);
+        }
+        //Floating Action Bar action
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

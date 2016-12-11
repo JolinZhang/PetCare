@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //set fragmentManager transaction
         fragmentManager = getFragmentManager();
         transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -271,9 +272,7 @@ public class MainActivity extends AppCompatActivity
             if (id == (petId - 1)) {
                 showDialog();
             } else if(id< (petId - 1)){
-
                 DataRepoConfig.getInstance().setCurrentPetId(pets.get(id).getId());
-
             }
         }
 
@@ -333,6 +332,11 @@ public class MainActivity extends AppCompatActivity
                             DataRepoConfig.getInstance().addPetId(id);
                             DataRepoConfig.getInstance().setCurrentPetId(id);
                             dialog.cancel();
+                            //detach and attach timeLine Fragment
+                            transaction.detach(timeLineFragment)
+                                    .attach(timeLineFragment)
+                                    .commit();
+
                         }
                     }
                 });

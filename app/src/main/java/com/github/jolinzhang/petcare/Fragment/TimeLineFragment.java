@@ -30,6 +30,7 @@ public class TimeLineFragment extends Fragment{
     private RecyclerView timeLineRecycler;
     private RecyclerView.LayoutManager layoutManager;
     private TimeLineAdapter adapter;
+    private FloatingActionButton fab;
 
     /**
      *  Ru Zhang - rxz151130
@@ -58,9 +59,15 @@ public class TimeLineFragment extends Fragment{
 
         timeLineRecycler.setAdapter(adapter);
 
+        //Floating Action Bar show
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        if(DataRepoConfig.getInstance().getCurrentPetId() == ""){
+            fab.setVisibility(View.INVISIBLE);
+        }else{
+            fab.setVisibility(View.VISIBLE);
+        }
 
         //Floating Action Bar action
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
