@@ -27,8 +27,8 @@ public class DataRepository implements IDataRepository {
     private static DataRepository instance = new DataRepository();
     private DataRepository() {}
 
-    public static final String AUTH_URL = "http://" + "138.68.55.252" + ":9080/auth";
-    public static final String REALM_URL = "realm://" + "138.68.55.252" + ":9080/~/petcare";
+    public static final String AUTH_URL = "http://" + "104.236.134.66" + ":9080/auth";
+    public static final String REALM_URL = "realm://" + "104.236.134.66" + ":9080/~/petcare";
 
     /**
      * Zengtai Qi - zxq150130

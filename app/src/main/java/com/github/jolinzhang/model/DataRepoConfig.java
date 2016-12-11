@@ -49,7 +49,7 @@ public class DataRepoConfig implements IDataRepoConfig {
     /**
      * Zengtai Qi - zxq150130
      */
-    String getCurrentPetId() { return getSharePreferences().getString(CURRENT_PET_ID, ""); }
+    public String getCurrentPetId() { return getSharePreferences().getString(CURRENT_PET_ID, ""); }
 
     private String PET_IDS = "PET_IDS";
 

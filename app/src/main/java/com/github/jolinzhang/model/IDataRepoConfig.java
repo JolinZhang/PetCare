@@ -5,7 +5,7 @@ package com.github.jolinzhang.model;
  */
 
 public interface IDataRepoConfig {
-
+    String getCurrentPetId();
     void setCurrentPetId(String id);
     void addPetId(String id);
     void removePetId(String id);
