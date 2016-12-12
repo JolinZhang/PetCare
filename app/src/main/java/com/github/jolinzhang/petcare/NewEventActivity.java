@@ -90,7 +90,17 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
                     startActivityForResult(pickPhoto, 1);
                 } else {
                     pictureUri = null;
-                    Util.getInstance().loadImage(event.getId(), pictureImageView, false);
+                    Util.getInstance().loadImage(event.getId(), pictureImageView, false, new com.squareup.picasso.Callback(){
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                 }
             }
         });
@@ -288,6 +298,16 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         descriptionEditText.setText(this.event.getDescription());
         if (this.event.hasPicture()) {
             pictureImageView.setVisibility(View.VISIBLE);
-            Util.getInstance().loadImage(this.event.getId(), pictureImageView, false); }
+            Util.getInstance().loadImage(this.event.getId(), pictureImageView, false, new com.squareup.picasso.Callback(){
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            }); }
     }
 }

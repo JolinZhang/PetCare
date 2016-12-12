@@ -123,7 +123,17 @@ public class EventActivity extends AppCompatActivity {
         titleTextView.setText(event.getTitle());
         descriptionTextView.setText(event.getDescription());
         if (event.hasPicture()) {
-            Util.getInstance().loadImage(event.getId(), pictureImageView, false);
+            Util.getInstance().loadImage(event.getId(), pictureImageView, false, new com.squareup.picasso.Callback(){
+                @Override
+                public void onError() {
+
+                }
+
+                @Override
+                public void onSuccess() {
+
+                }
+            });
         } else { pictureImageView.setVisibility(View.GONE); }
         dateTextView.setText(Util.getInstance().dateFormatter().format(event.getDatetime()));
     }

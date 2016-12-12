@@ -11,17 +11,20 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 /**
@@ -48,9 +51,9 @@ public class Util {
         Cursor cursor = context.getContentResolver().query(URI, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String s =cursor.getString(column_index);
+        String imagePath =cursor.getString(column_index);
         cursor.close();
-        File file = new File(s);
+        File file = new File(imagePath);
 
         MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
@@ -67,13 +70,25 @@ public class Util {
                 .post(requestBody)
                 .build();
 
-        client.newCall(request).enqueue(callback);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //handler the error
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+
+            }
+        });
     }
 
     /**
      *  Zengtai Qi- zxq150130
      */
-    public void loadImage(String id, ImageView imageView, boolean isCircle) {
+    //load circle image
+    public void loadImage(String id, ImageView imageView, boolean isCircle, final com.squareup.picasso.Callback callback) {
         RequestCreator rc = Picasso.with(context)
                 .load("https://server.shaneqi.com/upload/pt="+id) // Your image source.
                 .placeholder(R.drawable.ic_setting_account);
@@ -81,12 +96,25 @@ public class Util {
             int width = imageView.getMeasuredWidth();
             rc = rc.transform(new RoundedTransformation(width, 0));
         }
-        rc.fit().centerCrop().into(imageView);
+        //get call back
+        rc.fit().centerCrop().into(imageView, new com.squareup.picasso.Callback(){
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+
+            }
+        });
     }
 
     /**
      *  Zengtai Qi- zxq150130
      */
+    //load image
     public void loadImage(Uri uri, ImageView imageView) {
         Picasso.with(context)
                 .load(uri)

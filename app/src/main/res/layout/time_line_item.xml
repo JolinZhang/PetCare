@@ -19,14 +19,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:background="@color/colorAccentNight"
-                android:id="@+id/timeline_item_picture"/>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/timeline_item_picture"/>
+                    <ProgressBar
+                        android:id="@+id/process_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:indeterminate="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"

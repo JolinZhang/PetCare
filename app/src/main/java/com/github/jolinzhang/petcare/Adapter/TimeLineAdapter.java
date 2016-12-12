@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.jolinzhang.model.DataRepository;
@@ -39,12 +40,14 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
         private TextView content;
         private TextView time;
         private ImageView pictureImageView;
+        private ProgressBar processBar;
         public ViewHolder(View view){
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             content = (TextView) view.findViewById(R.id.content);
             time = (TextView) view.findViewById(R.id.time);
             pictureImageView = (ImageView) view.findViewById(R.id.timeline_item_picture);
+            processBar = (ProgressBar) view.findViewById(R.id.process_bar);
         }
     }
 
@@ -86,11 +89,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
             holder.pictureImageView.post(new Runnable() {
                 @Override
                 public void run() {
-//                    int width = holder.pictureImageView.getMeasuredWidth();
-//                    int height = width;
-//                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-//                    holder.pictureImageView.setLayoutParams(layoutParams);
-                    Util.getInstance().loadImage(thisEvent.getId(), holder.pictureImageView, false);
+                    Util.getInstance().loadImage(thisEvent.getId(), holder.pictureImageView, false, new com.squareup.picasso.Callback(){
+                        @Override
+                        public void onSuccess() {
+                            holder.processBar.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            holder.processBar.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
             });
         } else {

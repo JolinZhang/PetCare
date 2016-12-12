@@ -136,10 +136,30 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChange(Pet element) {
                 if (element.isLoaded() && element.isValid()) {
-                    Util.getInstance().loadImage(element.getId(), avatar, false);
+                    Util.getInstance().loadImage(element.getId(), avatar, false, new com.squareup.picasso.Callback(){
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                     name.setText(element.getName());
                 } else {
-                    Util.getInstance().loadImage("INVALIDID", avatar, false);
+                    Util.getInstance().loadImage("INVALIDID", avatar, false, new com.squareup.picasso.Callback(){
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                     name.setText("Add your pet here!");
                 }
             }

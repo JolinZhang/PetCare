@@ -128,7 +128,17 @@ public class NewPetActivity extends AppCompatActivity {
         });
 
         /* Avatar. */
-        Util.getInstance().loadImage(pet.getId(), avatarImageView, false);
+        Util.getInstance().loadImage(pet.getId(), avatarImageView, false, new com.squareup.picasso.Callback(){
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
         avatarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,7 +247,18 @@ public class NewPetActivity extends AppCompatActivity {
     /* Set pet. */
     public void setPet(Pet pet) {
         this.pet = pet;
-        Util.getInstance().loadImage(pet.getId(), avatarImageView, false);
+        Util.getInstance().loadImage(pet.getId(), avatarImageView, false, new com.squareup.picasso.Callback(){
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+
         idEditText.setText(pet.getId());
         nameEditText.setText(pet.getName());
         femaleButton.setChecked(pet.isFemale());

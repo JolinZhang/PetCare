@@ -79,7 +79,17 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
                     int height = width;
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
                     holder.pictureImageView.setLayoutParams(layoutParams);
-                    Util.getInstance().loadImage(thisEvent.getId(), holder.pictureImageView, false);
+                    Util.getInstance().loadImage(thisEvent.getId(), holder.pictureImageView, false, new com.squareup.picasso.Callback(){
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                 }
             });
         } else {

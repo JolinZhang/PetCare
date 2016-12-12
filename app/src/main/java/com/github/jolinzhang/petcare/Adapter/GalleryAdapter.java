@@ -79,7 +79,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 });
 
         Util.getInstance().loadImage(pastEventsWithPicture.get(position).getId(),holder.image,
-                false);
+                false, new com.squareup.picasso.Callback(){
+
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
     }
 
