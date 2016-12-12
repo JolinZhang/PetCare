@@ -14,7 +14,11 @@ import com.github.jolinzhang.model.Event;
 import com.github.jolinzhang.petcare.Adapter.OnThisDayAdapter;
 import com.github.jolinzhang.petcare.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import io.realm.RealmChangeListener;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -23,7 +27,7 @@ import io.realm.RealmResults;
 
 public class OnThisDayFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView onThisDayRecycler;
     private RecyclerView.LayoutManager layoutManager;
     private OnThisDayAdapter adapter;
 
@@ -42,20 +46,35 @@ public class OnThisDayFragment extends Fragment {
         getActivity().setTitle("OnThisDay");
 
         //adapter
-        recyclerView = (RecyclerView) view.findViewById(R.id.onThisDay_recycler);
+        onThisDayRecycler = (RecyclerView) view.findViewById(R.id.onThisDay_recycler);
 
         layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        onThisDayRecycler.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(adapter);
+        onThisDayRecycler.setAdapter(adapter);
 
-        DataRepository.getInstance().getEventsOnThisDay(new RealmChangeListener<RealmResults<Event>>() {
+        Date date = new Date();
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        final int month = cal.get(Calendar.MONTH);
+        final int day = cal.get(Calendar.DAY_OF_MONTH);
+        DataRepository.getInstance().getPastEvents(new RealmChangeListener<RealmResults<Event>>() {
             @Override
             public void onChange(final RealmResults<Event> element) {
-                recyclerView.post(new Runnable() {
+                onThisDayRecycler.post(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.events = element;
+                        RealmList<Event> onThisDay = new RealmList<Event>();
+                        for (int i = 0; i < element.size(); i++) {
+                            Date mDate = element.get(i).getDatetime();
+                            cal.setTime(mDate);
+                            int mMonth = cal.get(Calendar.MONTH);
+                            int mDay = cal.get(Calendar.DAY_OF_MONTH);
+                            if ((mMonth == month) && (mDay == day)) {
+                                onThisDay.add(element.get(i));
+                            }
+                        }
+                        adapter.events = onThisDay;
                         adapter.notifyDataSetChanged();
                     }
                 });

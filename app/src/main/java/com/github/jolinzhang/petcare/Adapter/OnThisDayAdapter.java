@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.jolinzhang.model.Event;
@@ -15,6 +16,7 @@ import com.github.jolinzhang.petcare.EventActivity;
 import com.github.jolinzhang.petcare.R;
 import com.github.jolinzhang.util.Util;
 
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -23,7 +25,7 @@ import io.realm.RealmResults;
 
 public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.ViewHolder> {
 
-    public RealmResults<Event> events;
+    public RealmList<Event> events;
     private Context context;
 
     /**
@@ -34,12 +36,14 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
         private TextView content;
         private TextView time;
         private ImageView pictureImageView;
+        private ProgressBar progressBar;
         public ViewHolder(View view){
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             content = (TextView) view.findViewById(R.id.content);
             time = (TextView) view.findViewById(R.id.time);
             pictureImageView = (ImageView) view.findViewById(R.id.timeline_item_picture);
+            progressBar = (ProgressBar) view.findViewById(R.id.process_bar);
         }
 
     }
@@ -75,19 +79,15 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.View
             holder.pictureImageView.post(new Runnable() {
                 @Override
                 public void run() {
-                    int width = holder.pictureImageView.getMeasuredWidth();
-                    int height = width;
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-                    holder.pictureImageView.setLayoutParams(layoutParams);
                     Util.getInstance().loadImage(thisEvent.getId(), holder.pictureImageView, false, new com.squareup.picasso.Callback(){
                         @Override
                         public void onSuccess() {
-
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
 
                         @Override
                         public void onError() {
-
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
                 }

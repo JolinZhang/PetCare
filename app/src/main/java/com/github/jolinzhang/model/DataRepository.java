@@ -2,15 +2,19 @@ package com.github.jolinzhang.model;
 
 import android.content.Context;
 
+import com.squareup.picasso.Callback;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import io.realm.ObjectServerError;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import io.realm.SyncConfiguration;
@@ -172,14 +176,15 @@ public class DataRepository implements IDataRepository {
      */
     private RealmResults<Event> getEventsOnThisDay() {
         if (eventsOnThisDay != null) { return eventsOnThisDay; }
-        Calendar begin = Calendar.getInstance();
-        begin.set(2015, 10, 30, 6,0,0);
-        Calendar end = Calendar.getInstance();
-        end.set(2015, 12, 20, 6,0,0);
-        return realm.where(Event.class)
-                .between("datetime", begin.getTime(), end.getTime())
-                .equalTo("isCompleted", true)
-                .findAllSortedAsync("datetime", Sort.DESCENDING);
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        RealmResults<Event> onThisDay = realm.where(Event.class)
+                .lessThan("datetime", date)
+                .findAll();
+
+        return onThisDay;
     }
 
     /**
@@ -279,6 +284,7 @@ public class DataRepository implements IDataRepository {
         Pet owner = realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId()).findFirst();
         realm.beginTransaction();
         event.setOwner(owner);
+
         realm.copyToRealmOrUpdate(event);
         realm.commitTransaction();
     }
@@ -353,7 +359,5 @@ public class DataRepository implements IDataRepository {
             getPets().addChangeListener(listener);
         }
     }
-
-
 
 }
