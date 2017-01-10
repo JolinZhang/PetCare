@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
+//import java.util.function.Predicate;
 
 import io.realm.ObjectServerError;
 import io.realm.Realm;
@@ -280,13 +280,18 @@ public class DataRepository implements IDataRepository {
      * Zengtai Qi - zxq150130
      */
     @Override
-    public void createOrUpdateEvent(Event event) {
-        Pet owner = realm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId()).findFirst();
-        realm.beginTransaction();
-        event.setOwner(owner);
+    public void createOrUpdateEvent(final Event event,
+                                    final Realm.Transaction.OnSuccess onSuccess,
+                                    final Realm.Transaction.OnError onError) {
 
-        realm.copyToRealmOrUpdate(event);
-        realm.commitTransaction();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                Pet owner = bgRealm.where(Pet.class).equalTo("id", DataRepoConfig.getInstance().getCurrentPetId()).findFirst();
+                event.setOwner(owner);
+                bgRealm.copyToRealmOrUpdate(event);
+            }
+        }, onSuccess, onError);
     }
 
     /**

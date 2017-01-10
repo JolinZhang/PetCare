@@ -70,18 +70,7 @@ public class Util {
                 .post(requestBody)
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //handler the error
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-
-            }
-        });
+        client.newCall(request).enqueue(callback);
     }
 
     /**

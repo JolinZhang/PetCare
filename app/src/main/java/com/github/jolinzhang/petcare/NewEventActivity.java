@@ -23,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -35,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+import io.realm.Realm;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -55,6 +57,7 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
     private ImageButton pictureButton;
     private ImageButton locationButton;
     private ImageButton dateButton;
+    private ProgressBar progress;
 
     private Uri pictureUri;
 
@@ -196,12 +199,14 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
         pictureButton = (ImageButton) findViewById(R.id.new_event_picture_button);
         locationButton = (ImageButton) findViewById(R.id.new_event_location);
         dateButton = (ImageButton) findViewById(R.id.new_event_date);
+        progress = (ProgressBar) findViewById(R.id.progress);
     }
 
     /**
      *  Ru Zhang - rxz151130
      */
     private void save() {
+        progress.setVisibility(View.VISIBLE);
         event.setId(UUID.randomUUID().toString());
         event.setTitle(titleEditText.getText().toString());
         event.setDescription(descriptionEditText.getText().toString());
@@ -211,10 +216,16 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    finish();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.setVisibility(View.INVISIBLE);
+                            finish();
+                        }
+                    });
+
                 }
             });
         }
@@ -225,8 +236,20 @@ public class NewEventActivity extends AppCompatActivity implements LocationListe
             event.setLongitude(location.getLongitude());
             event.setLatitude(location.getLatitude());
         }
-        DataRepository.getInstance().createOrUpdateEvent(event);
-        if (pictureUri == null) { finish(); }
+        DataRepository.getInstance().createOrUpdateEvent(event, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                if (pictureUri == null) {
+                    finish();
+                }
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+
+            }
+        });
+
     }
 
     /* Image picker. */

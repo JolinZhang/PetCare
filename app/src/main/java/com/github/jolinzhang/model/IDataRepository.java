@@ -1,5 +1,6 @@
 package com.github.jolinzhang.model;
 
+import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import io.realm.SyncUser;
@@ -16,7 +17,9 @@ public interface IDataRepository {
 
     void createOrUpdatePet(Pet pet);
 
-    void createOrUpdateEvent(Event event);
+    void createOrUpdateEvent( Event event,
+                                    Realm.Transaction.OnSuccess onSuccess,
+                                    Realm.Transaction.OnError onError);
 
     void getPet(RealmChangeListener<Pet> listener);
     void getPets(RealmChangeListener<RealmResults<Pet>> listener);
